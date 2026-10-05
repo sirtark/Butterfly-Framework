@@ -15,7 +15,7 @@ namespace Butterfly.Chrysalis.Core.Tests
             Assert.Equal("inventory.v1", Service.Namespace);
             Assert.Equal("inventory", Service.Route);
             Assert.Equal(typeof(IInventoryService), Service.ContractType);
-            Assert.Equal(["GetProduct", "Search", "AddProduct", "AddStock", "Delete", "Echo", "Fail", "Slow", "WhoAmI"], Service.Operations.Select(operation => operation.Name));
+            Assert.Equal(["GetProduct", "Search", "AddProduct", "AddStock", "Delete", "Find", "Echo", "Fail", "Slow", "WhoAmI"], Service.Operations.Select(operation => operation.Name));
         }
 
         [Fact]
@@ -35,6 +35,7 @@ namespace Butterfly.Chrysalis.Core.Tests
             Assert.Empty(Service.FindOperation("WhoAmI")!.Parameters);
             Assert.Null(Service.FindOperation("Delete")!.ReturnType);
             Assert.Null(Service.FindOperation("AddStock")!.Http);
+            Assert.Equal(new ChrysalisHttpBinding("QUERY", "search"), Service.FindOperation("Find")!.Http);
             Assert.Equal("InventoryService.AddStock", Service.FindOperation("AddStock")!.FullName);
         }
 

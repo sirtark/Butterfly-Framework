@@ -176,7 +176,7 @@ namespace Butterfly.Chrysalis.Soap.Tests
             XNamespace w = "http://schemas.xmlsoap.org/wsdl/";
 
             Assert.Equal("InventoryService", wsdl.Root!.Attribute("name")!.Value);
-            Assert.Equal(9, wsdl.Root.Element(w + "portType")!.Elements(w + "operation").Count());
+            Assert.Equal(10, wsdl.Root.Element(w + "portType")!.Elements(w + "operation").Count());
             Assert.Equal(2, wsdl.Root.Elements(w + "binding").Count());
             var addresses = wsdl.Descendants().Where(element => element.Name.LocalName == "address").Select(element => element.Attribute("location")!.Value).ToList();
             Assert.All(addresses, address => Assert.Equal($"http://127.0.0.1:{http.Port()}/soap/InventoryService", address));

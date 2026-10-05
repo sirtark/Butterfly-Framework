@@ -10,7 +10,8 @@ namespace Butterfly.Chrysalis.Rest
         /// <summary>
         /// Exposes the services of <paramref name="chrysalis"/> as REST under <paramref name="pathPrefix"/>: an operation with
         /// [HttpGet("products/{id}")] answers GET {prefix}/{service route}/products/{id}; one without an attribute answers
-        /// POST {prefix}/{service route}/{operation} with its parameters in a JSON object.
+        /// POST {prefix}/{service route}/{operation} with its parameters in a JSON object. QUERY operations ([HttpQuery], RFC 10008)
+        /// read a JSON body like POST, and their paths advertise it with Accept-Query and answer OPTIONS.
         /// </summary>
         public static HttpServer MapRest(this HttpServer http, ChrysalisServer chrysalis, string pathPrefix = "/api")
         {
@@ -31,7 +32,10 @@ namespace Butterfly.Chrysalis.Rest
     {
         public const string Protocol = "REST";
 
-        private static readonly HashSet<string> BodyMethods = new(StringComparer.OrdinalIgnoreCase) { "POST", "PUT", "PATCH" };
+        private static readonly HashSet<string> BodyMethods = new(StringComparer.OrdinalIgnoreCase) { "POST", "PUT", "PATCH", "QUERY" };
+
+        /// <summary>The media types a QUERY body may use (an RFC 9651 list, as Accept-Query expects).</summary>
+        internal const string AcceptQuery = "application/json";
 
         private readonly string[] prefix = Segments(pathPrefix);
         private readonly Dictionary<ChrysalisOperation, RouteTemplate> templates = [];
@@ -59,11 +63,31 @@ namespace Butterfly.Chrysalis.Rest
                 }
             }
 
+            try
+            {
+                await HandleAsync(http, operation, routeValues, allowed).ConfigureAwait(false);
+            }
+            finally
+            {
+                // Accept-Query applies to the whole path (RFC 10008), so every answer for it says so, errors included.
+                if (allowed.Contains("QUERY"))
+                    http.Response.Headers["Accept-Query"] = AcceptQuery;
+            }
+        }
+
+        private async ValueTask HandleAsync(HttpServerContext http, ChrysalisOperation? operation, Dictionary<string, string>? routeValues, SortedSet<string> allowed)
+        {
+            var request = http.Request;
             if (operation is null)
             {
                 if (allowed.Count == 0)
                 {
                     WriteProblem(http.Response, ChrysalisStatus.NotFound, $"No operation answers {request.Path}.");
+                }
+                else if (request.Method == "OPTIONS")
+                {
+                    http.Response.StatusCode = 204;
+                    http.Response.Headers["Allow"] = string.Join(", ", allowed.Append("OPTIONS"));
                 }
                 else
                 {
@@ -71,6 +95,21 @@ namespace Butterfly.Chrysalis.Rest
                     http.Response.Headers["Allow"] = string.Join(", ", allowed);
                 }
                 return;
+            }
+
+            // RFC 10008: QUERY content must say what it is, and a media type the resource does not take is a 415.
+            if (request.Method == "QUERY" && !request.Body.IsEmpty)
+            {
+                if (request.MediaType is null)
+                {
+                    WriteProblem(http.Response, ChrysalisStatus.InvalidArgument, "A QUERY with content must have a Content-Type.");
+                    return;
+                }
+                if (!IsJson(request.MediaType))
+                {
+                    WriteProblem(http.Response, 415, "Unsupported Media Type", $"QUERY content must be {AcceptQuery}, not {request.MediaType}.", null);
+                    return;
+                }
             }
 
             try
@@ -112,6 +151,18 @@ namespace Butterfly.Chrysalis.Rest
             }
 
             var remaining = Enumerable.Range(0, operation.Parameters.Count).Where(index => !bound.Contains(index)).ToList();
+            if (request.Method == "QUERY")
+            {
+                // The query string is part of what QUERY asks (RFC 10008): scalars found there bind first, the body takes the rest.
+                var fromQuery = remaining.Where(index => operation.Parameters[index].Type.IsScalar && request.Query[operation.Parameters[index].Name].Any()).ToList();
+                BindQuery(operation, request, arguments, fromQuery);
+                remaining.RemoveAll(fromQuery.Contains);
+
+                // With a single message parameter, the body is that message: the other scalars only come from the query string.
+                var messages = remaining.Where(index => !operation.Parameters[index].Type.IsScalar).ToList();
+                if (messages.Count == 1)
+                    remaining = messages;
+            }
             if (BodyMethods.Contains(request.Method))
                 BindBody(operation, request, arguments, remaining);
             else
@@ -129,8 +180,7 @@ namespace Butterfly.Chrysalis.Rest
                 return;
             }
 
-            var mediaType = request.MediaType;
-            if (mediaType is not null && mediaType != "application/json" && !mediaType.EndsWith("+json", StringComparison.Ordinal))
+            if (request.MediaType is { } mediaType && !IsJson(mediaType))
                 throw new ChrysalisException(ChrysalisStatus.InvalidArgument, "The request body must be JSON (Content-Type: application/json).");
 
             using var document = Parse(request.Body, Profile.MaxDepth);
@@ -179,6 +229,8 @@ namespace Butterfly.Chrysalis.Rest
                     throw new ChrysalisException(ChrysalisStatus.InvalidArgument, $"'{parameter.Name}' cannot be sent in the query string; use a request body.");
             }
         }
+
+        private static bool IsJson(string mediaType) => mediaType == "application/json" || mediaType.EndsWith("+json", StringComparison.Ordinal);
 
         private static object? Parse(ChrysalisParameter parameter, string text, string name)
         {

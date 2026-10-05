@@ -109,6 +109,26 @@ namespace Butterfly.Chrysalis.Generators.Tests
             Assert.Contains("ChrysalisParameter(\"input\"", source);
         }
 
+        [Theory]
+        [InlineData("HttpGet", "GET")]
+        [InlineData("HttpPost", "POST")]
+        [InlineData("HttpPut", "PUT")]
+        [InlineData("HttpPatch", "PATCH")]
+        [InlineData("HttpDelete", "DELETE")]
+        [InlineData("HttpQuery", "QUERY")]
+        public void HttpAttributesBindTheirMethod(string attribute, string method)
+        {
+            var (generator, compilation, source) = Run($$"""
+                public class Filter { public string? Text { get; set; } }
+                [ChrysalisService]
+                public interface ICatalog { [{{attribute}}("items/search")] List<string> Find(Filter filter); }
+                """);
+
+            Assert.Empty(generator);
+            Assert.Empty(compilation);
+            Assert.Contains($"new global::Butterfly.Chrysalis.ChrysalisHttpBinding(\"{method}\", \"items/search\")", source);
+        }
+
         [Fact]
         public void DescribesContractsAndSerializerCallsWithoutServices()
         {

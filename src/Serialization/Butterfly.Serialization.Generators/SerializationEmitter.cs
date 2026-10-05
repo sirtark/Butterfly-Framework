@@ -180,6 +180,7 @@ namespace Butterfly.Serialization.Generators
                         "HttpPutAttribute" => "PUT",
                         "HttpPatchAttribute" => "PATCH",
                         "HttpDeleteAttribute" => "DELETE",
+                        "HttpQueryAttribute" => "QUERY",
                         _ => "POST"
                     };
                     operation.HttpRoute = Positional(http);

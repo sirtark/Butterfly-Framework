@@ -44,6 +44,7 @@ namespace Butterfly.Chrysalis.AspNetCore.Tests
         public Task<Product> AddProduct(Product product) => Shared.AddProduct(product);
         public int AddStock(int productId, int quantity) => Shared.AddStock(productId, quantity);
         public Task Delete(int id) => Shared.Delete(id);
+        public Task<IReadOnlyList<Product>> Find(ProductFilter filter, int? limit) => Shared.Find(filter, limit);
         public Sample Echo(Sample sample) => sample;
         public void Fail(ChrysalisStatus status, string message) => Shared.Fail(status, message);
         public Task<string> Slow(int milliseconds, CancellationToken cancellationToken) => Shared.Slow(milliseconds, cancellationToken);
@@ -119,6 +120,31 @@ namespace Butterfly.Chrysalis.AspNetCore.Tests
             Assert.Equal(HttpStatusCode.NotFound, missing.StatusCode);
             Assert.Equal("application/problem+json", missing.Content.Headers.ContentType!.MediaType);
             Assert.Equal("not chrysalis", await client.GetStringAsync("/plain"));
+        }
+
+        [Theory]
+        [InlineData(false)]
+        [InlineData(true)]
+        public async Task ServesQueryFromKestrel(bool overHttp2)
+        {
+            // Kestrel passes the QUERY method (RFC 10008) and its body through, on HTTP/1.1 and on HTTP/2.
+            using var client = new HttpClient { BaseAddress = overHttp2 ? http2 : http1 };
+            HttpRequestMessage Request(HttpMethod method, string path, string? json) => new(method, path)
+            {
+                Content = json is null ? null : new StringContent(json, Encoding.UTF8, "application/json"),
+                Version = overHttp2 ? HttpVersion.Version20 : HttpVersion.Version11,
+                VersionPolicy = HttpVersionPolicy.RequestVersionExact
+            };
+
+            using var found = await client.SendAsync(Request(new HttpMethod("QUERY"), "/api/inventory/search?limit=1", """{"categories":["Music","Games"]}"""));
+            using var get = await client.SendAsync(Request(HttpMethod.Get, "/api/inventory/search", null));
+
+            Assert.Equal(overHttp2 ? HttpVersion.Version20 : HttpVersion.Version11, found.Version);
+            Assert.Equal(HttpStatusCode.OK, found.StatusCode);
+            Assert.Equal(2, JsonDocument.Parse(await found.Content.ReadAsStringAsync()).RootElement.EnumerateArray().Single().GetProperty("id").GetInt32());
+            Assert.Equal(["application/json"], found.Headers.GetValues("Accept-Query"));
+            Assert.Equal(HttpStatusCode.MethodNotAllowed, get.StatusCode);
+            Assert.Equal(["QUERY"], get.Content.Headers.Allow);
         }
 
         [Fact]
