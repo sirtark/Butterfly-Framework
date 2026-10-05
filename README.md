@@ -1,259 +1,318 @@
+<div align="center">
+
+<img src="eng/Butterfly-readme.png" alt="Butterfly" width="140" />
+
 # Butterfly
 
-## Estructura
+**A modular framework for .NET, built from the socket up.**
 
-```
-Butterfly.slnx               Solución única con todo el framework (src, tests, tools)
-Directory.Build.props        Configuración común: versión, firma, empaquetado
-Directory.Build.targets      Convenciones: InternalsVisibleTo, caché de NuGet, catálogo
-Directory.Packages.props     Versiones centralizadas de paquetes de terceros
-NuGet.config                 Feed local "Butterfly" -> Packages/Release/Butterfly
-build.ps1                    Build / Test / Pack / InstallTool / Samples / All
-eng/                         Butterfly.png (icono) y Butterfly.snk (clave de firma)
-src/
-  Butterfly.Sdk/             SDK de MSBuild; Sdk/Butterfly.Version.props es la ÚNICA fuente de la versión
-  <Área>/Butterfly.<Área>.<Módulo>/
-  Communication/             Protocolos de red (ver más abajo)
-tests/
-  <Área>/Butterfly.<Área>.<Módulo>.Tests/
-  Communication/Shared/      Servidores falsos (TCP/UDP) y certificado TLS de prueba, compartidos por sus tests
-tools/
-  Butterfly.Tool/            CLI "butterfly"
-samples/                     Consumidores de los paquetes (aislados del build del framework)
-Packages/Release/Butterfly/  Feed local donde se publica todo
-```
+Network clients, multi-protocol servers, reflection-free serialization, scripting, workflows
+and host introspection, shipped as small NuGet packages that always move together.
 
-## Versión
+[![.NET 10](https://img.shields.io/badge/.NET-10-512BD4?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
+[![C# 14](https://img.shields.io/badge/C%23-14-239120?logo=csharp&logoColor=white)](https://learn.microsoft.com/dotnet/csharp/)
+[![Version](https://img.shields.io/badge/version-0.0.1-4A6CF0)](#versioning)
+[![AOT](https://img.shields.io/badge/Native%20AOT-ready-2F3699)](#design-principles)
+[![Platforms](https://img.shields.io/badge/platforms-Windows%20%7C%20Linux-lightgrey)](#)
 
-La versión se cambia en un único sitio: `src/Butterfly.Sdk/Sdk/Butterfly.Version.props`.
-Todas las librerías, `Butterfly.Sdk` y `Butterfly.Tool` se publican con esa versión.
+[Packages](#-packages) •
+[Quick start](#-quick-start) •
+[Highlights](#-highlights) •
+[Building](#-building-from-source) •
+[CLI](#-the-butterfly-cli) •
+[Contributing](#-extending-butterfly)
 
-## Dependencias: framework vs. consumidores
+</div>
 
-El framework se compila **solo desde el código fuente**; los paquetes del feed son únicamente para los consumidores.
+---
 
-| Proyecto                            | SDK                    | Dependencias Butterfly                       |
-|-------------------------------------|------------------------|----------------------------------------------|
-| Framework (`src/`, `tests/`, `tools/`) | `Microsoft.NET.Sdk`  | `ProjectReference`                           |
-| Consumidor (`samples/`, otras soluciones) | `Butterfly.Sdk/x.y.z` | `PackageReference` sin versión (`butterfly add`) |
+## ✨ Why Butterfly
 
-Si un proyecto del framework usara `Butterfly.Sdk` o un `PackageReference` a `Butterfly.*`, dependería de su
-propio resultado: solo compilaría mientras el feed tuviera una build anterior. El build lo impide con un error
-explicativo, y `butterfly add`/`init` se niegan a tocar proyectos del framework.
+- **One version for everything.** `Butterfly.Sdk` aligns every `Butterfly.*` reference to the same framework version, so packages never drift apart.
+- **Own the stack.** Sockets, HTTP/1.1 and HTTP/2, HPACK, TLS negotiation, DNS, SMTP, IMAP, MQTT: implemented here, not wrapped.
+- **No reflection at runtime.** Contracts are described at compile time by a source generator, ready for trimming and Native AOT.
+- **Write once, expose everywhere.** A Chrysalis service is an interface; REST, SOAP, gRPC, JSON-RPC, XML-RPC and a binary protocol come for free.
+- **Pay for what you use.** Every area is split into focused packages: reference `Butterfly.Serialization.Json` without pulling in YAML or Protobuf.
 
-## Compilar y publicar
+## 📦 Packages
 
-```powershell
-./build.ps1              # empaqueta todo en Packages/Release/Butterfly
-./build.ps1 Test
-./build.ps1 Clean        # vacía el feed (versión actual) y la caché de NuGet, sin borrar la carpeta
-./build.ps1 InstallTool  # instala/reinstala la herramienta global "butterfly"
-./build.ps1 All          # Pack + Test + InstallTool + Samples
-```
+| Area | Packages | What you get |
+|---|---|---|
+| 🔌 **Networking** | `Networking.Sockets` | A socket layer with OS-level timeouts, TLS and abortable I/O |
+| 📡 **Communication** | `Core` · `Dns` · `Http` · `WebSockets` · `Mail` · `Smtp` · `Pop3` · `Imap` · `Ftp` · `Ntp` · `Mqtt` | Protocol clients with TLS by default and secure authentication rules |
+| 🧬 **Serialization** | `Core` · `Json` · `Xml` · `Yaml` · `Csv` · `Protobuf` · `MessagePack` · `Cbor` | Source-generated contracts, opt-in/opt-out members and profiles |
+| 🦋 **Chrysalis** | `Core` · `Http` · `Rest` · `Soap` · `JsonRpc` · `XmlRpc` · `Grpc` · `Binary` · `AspNetCore` | A multi-protocol RPC server with typed clients and ASP.NET Core integration |
+| 📜 **Scripting** | `Core` · `CSharp` · `Lua` · `Lua.MoonSharp` · `Lua.NLua` · `AspNetCore` · `Chrysalis` | Sandboxed C# and Lua execution with timeouts, validation and telemetry |
+| 🔀 **Workflows** | `Core` · `Scripting` · `AspNetCore` · `Chrysalis` | A JSON-defined workflow engine: branches, events, validations, jumps, Mermaid graphs |
+| 🖥️ **SystemInfo** | `Core` · `CPU` · `Memory` · `OS` · `Chrysalis` | Real hardware and OS detection: CPU features, virtualization support, memory, OS version |
+| ☁️ **Virtualization** | `Core` · `HyperV` · `Libvirt` · `Chrysalis` | Virtual machine lifecycle and checkpoints over Hyper-V and libvirt/KVM |
+| 🧩 **DesignPatterns** | `Creational` · `Structural` · `Behavioral` · `Pipelines` · `StateMachines` | Shared abstractions for the classic patterns |
+| 🛠️ **Tooling** | `Butterfly.Sdk` · `Butterfly.Tool` | The MSBuild SDK and the `butterfly` command-line tool |
 
-### Vaciar el feed
+> [!TIP]
+> Every package id starts with `Butterfly.`, so the full name of `Serialization.Json` is `Butterfly.Serialization.Json`.
 
-`./build.ps1 Clean` es la forma correcta de empezar de cero: quita los paquetes de la versión actual del
-feed y de la caché de NuGet, y borra `bin/obj`. **No borres la carpeta `Packages/Release/Butterfly`**: está
-registrada como fuente de NuGet y, si no existe, falla el restore de cualquier proyecto de la máquina
-(`NU1301`). Igualmente, cualquier build del framework la vuelve a crear. `Samples` e `InstallTool` publican
-primero si el feed está vacío.
+## 🚀 Quick start
 
-Compilar en `Release` desde Visual Studio también publica los paquetes. Al empaquetar se borra la copia
-de esa versión de la caché de NuGet (`~/.nuget/packages`), para que los consumidores reciban los cambios
-aunque la versión no haya cambiado. Se desactiva con `-p:ButterflyEvictPackageCache=false`.
-
-## Consumir Butterfly
+Point a project at `Butterfly.Sdk` and add packages **without versions**. The SDK supplies them:
 
 ```xml
 <Project Sdk="Butterfly.Sdk/0.0.1">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+  </PropertyGroup>
+
   <ItemGroup>
-    <!-- Sin versión: el SDK usa la del framework -->
-    <PackageReference Include="Butterfly.Networking.Sockets" />
+    <PackageReference Include="Butterfly.Serialization.Json" />
+    <PackageReference Include="Butterfly.Chrysalis.Rest" />
   </ItemGroup>
+
 </Project>
 ```
 
-Con otro SDK (Web, Worker...), Butterfly.Sdk se añade encima:
+Already on another SDK (Web, Worker...)? Add Butterfly on top:
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <Sdk Name="Butterfly.Sdk" Version="0.0.1" />
-  ...
 </Project>
 ```
 
-Una referencia con `Version` (o `VersionOverride` si se usa gestión central) queda fijada y el SDK no la toca.
+Or let the CLI do it for you:
 
-## Herramienta `butterfly`
-
-Siempre entrega los paquetes en la versión del framework con la que se compiló.
-
-```
-butterfly list                           Paquetes disponibles (* = referenciado por el proyecto)
-butterfly add Networking.Sockets         Añade paquetes (nombre corto o completo)
-butterfly remove Networking.Sockets
-butterfly init                           Pasa el proyecto a Butterfly.Sdk (o lo actualiza de versión)
-butterfly version
+```bash
+butterfly init
 ```
 
-Opciones comunes: `-p|--project <ruta>` y `--no-restore`. Si el restore falla, los cambios se revierten.
+```bash
+butterfly add Serialization.Json Chrysalis.Rest
+```
 
-Según el proyecto, `add`:
-- con **Butterfly.Sdk** → referencia sin versión (la pone el SDK);
-- con **gestión central** (`Directory.Packages.props`) → `PackageVersion` con la versión del framework;
-- en otro caso → `Version="<versión del framework>"` en la referencia.
+## 🌟 Highlights
 
-Al subir la versión del framework: `./build.ps1 All` y luego `butterfly init` en cada proyecto consumidor
-(incluidos los de `samples/`).
-
-## Communication: protocolos
-
-Clientes construidos sobre `Butterfly.Networking.Sockets` (sin `System.Net.Sockets`), en `src/Communication/`:
-
-| Paquete                                | Protocolo                                                               | Puertos (TLS)   |
-|----------------------------------------|-------------------------------------------------------------------------|-----------------|
-| `Butterfly.Communication.Core`         | Base común: conexión, TLS/STARTTLS, resolución de nombres, SASL         |                 |
-| `Butterfly.Communication.Dns`          | DNS (A, AAAA, CNAME, MX, TXT, NS, PTR, SRV, SOA, CAA), UDP + TCP, EDNS  | 53              |
-| `Butterfly.Communication.Http`         | HTTP/1.1 y HTTPS: keep-alive, chunked, gzip/deflate/br, redirecciones, cookies, formularios, multipart | 80 (443) |
-| `Butterfly.Communication.WebSockets`   | WebSockets `ws://` y `wss://`                                           | 80 (443)        |
-| `Butterfly.Communication.Mail`         | Mensajes y MIME: texto, HTML, adjuntos, imágenes inline, cabeceras codificadas |          |
-| `Butterfly.Communication.Smtp`         | Envío de correo: STARTTLS, PLAIN/LOGIN/CRAM-MD5/XOAUTH2                  | 587, 25 (465)   |
-| `Butterfly.Communication.Pop3`         | Descarga de correo: STLS, SASL, UIDL, TOP                               | 110 (995)       |
-| `Butterfly.Communication.Imap`         | Buzones: carpetas, búsqueda, fetch, flags, move, append, XOAUTH2        | 143 (993)       |
-| `Butterfly.Communication.Ftp`          | FTP y FTPS (explícito/implícito, canal de datos cifrado), MLSD/LIST, reanudación | 21 (990) |
-| `Butterfly.Communication.Ntp`          | Hora de red (SNTP): desfase y retardo                                   | 123             |
-| `Butterfly.Communication.Mqtt`         | MQTT 3.1.1: QoS 0/1/2, retained, will, sesiones persistentes            | 1883 (8883)     |
+### 🧬 Serialization: one contract, seven formats
 
 ```csharp
-using var smtp = new SmtpClient();
-smtp.Connect("smtp.example.com");              // 587 + STARTTLS obligatorio
-smtp.Authenticate("usuario", "clave");
-smtp.Send(new MailMessage { From = "yo@example.com", Subject = "Hola", TextBody = "..." , To = { "tu@example.com" } });
-```
-
-Decisiones comunes a todos los clientes:
-
-- **TLS por defecto** (`TlsMode.Auto`): TLS implícito en el puerto seguro del protocolo y STARTTLS **obligatorio** en el
-  resto; si el servidor no lo ofrece, falla en lugar de seguir en claro (`TlsMode.StartTlsWhenAvailable` o `None`
-  para aceptarlo). Los certificados se validan siempre, salvo que `TlsOptions` diga lo contrario.
-- **Sin contraseñas en claro**: autenticarse sin TLS contra un host remoto lanza excepción salvo
-  `AllowInsecureAuthentication = true` (loopback está permitido).
-- **Timeouts siempre**: `ConnectionOptions` (conexión, lectura, escritura). Las sockets los aplican en el SO.
-- **Nombres**: IP literal → `localhost` → fichero hosts → DNS propio → resolver del sistema (búsquedas de dominio, mDNS, VPN).
-- **Síncrono + `…Async`**: las operaciones son bloqueantes; las versiones async las ejecutan en el pool y la
-  cancelación aborta la conexión (`Socket.Abort`).
-- **`HttpClient`**: el paquete HTTP quita el `using System.Net.Http` implícito para que `HttpClient`/`HttpContent` no
-  sean ambiguos (`ButterflyKeepSystemNetHttpUsing=true` lo conserva).
-
-No incluido todavía: HTTP/2 y proxies HTTP, FTP activo, IMAP IDLE, MQTT 5, SSH/SFTP, servidores.
-
-## Serialization: formatos
-
-`Butterfly.Serialization.Core` describe los tipos **en tiempo de compilación** con un generador de código (sin
-reflexión, compatible con AOT) que viaja dentro del paquete y llega también a quien lo recibe de forma transitiva.
-Cada formato es un paquete:
-
-| Paquete                                  | Formato                                                       |
-|------------------------------------------|---------------------------------------------------------------|
-| `Butterfly.Serialization.Json`           | JSON (`System.Text.Json` por debajo)                          |
-| `Butterfly.Serialization.Xml`            | XML                                                           |
-| `Butterfly.Serialization.Yaml`           | YAML                                                          |
-| `Butterfly.Serialization.Csv`            | CSV (listas de filas planas; separador configurable)          |
-| `Butterfly.Serialization.Protobuf`       | Protocol Buffers (`Timestamp`, `Duration`, `Value` de Google) |
-| `Butterfly.Serialization.MessagePack`    | MessagePack                                                   |
-| `Butterfly.Serialization.Cbor`           | CBOR                                                          |
-
-```csharp
-[SerializationContract]                      // opt-out (por defecto): se serializa todo salvo lo marcado
+[SerializationContract]                         // opt-out: everything is serialized unless marked
 public sealed class Customer
 {
     public int Id { get; init; }
-    [Serialize(Profiles = ["Admin"])]        // solo en el perfil Admin
+
+    [Serialize(Profiles = ["Admin"])]           // only in the Admin profile
     public string? Email { get; init; }
-    [DontSerialize("Public")]                // en todos menos Public
+
+    [DontSerialize("Public")]                   // everywhere except the Public profile
     public decimal CreditLimit { get; init; }
-    [DontSerialize]                          // nunca
+
+    [DontSerialize]                             // never
     public string Password { get; set; } = "";
-    [Serialize(Name = "tag_list", Number = 20)]
+
+    [Serialize(Name = "tag_list", Number = 20)] // wire name and Protobuf field number
     public List<string> Tags { get; init; } = [];
 }
 
-[SerializationContract(Mode = SerializationMode.OptIn)]   // solo lo marcado con [Serialize]
-public sealed class Session { [Serialize] public string User { get; init; } = ""; public string Token { get; init; } = ""; }
+var admin = new SerializationProfile("Admin") { Naming = NamingPolicy.SnakeCase, Indented = true };
 
-var json  = ButterflySerializer.SerializeToString(customer, JsonFormat.Instance, new SerializationProfile("Admin") { Naming = NamingPolicy.SnakeCase });
-var bytes = ButterflySerializer.Serialize(customer, ProtobufFormat.Instance);
-var back  = ButterflySerializer.Deserialize<Customer>(bytes, ProtobufFormat.Instance);
+string json  = ButterflySerializer.SerializeToString(customer, JsonFormat.Instance, admin);
+byte[] proto = ButterflySerializer.Serialize(customer, ProtobufFormat.Instance);
+Customer copy = ButterflySerializer.Deserialize<Customer>(proto, ProtobufFormat.Instance);
 ```
 
-- **Perfiles** (`SerializationProfile`): eligen miembros (`[Serialize(Profiles)]`, `[DontSerialize(perfiles)]`) y
-  convenciones (nombres, enums como texto o número, nulos, valores por defecto, indentado, profundidad máxima,
-  rechazo de miembros desconocidos). Un miembro oculto en un perfil **tampoco se lee** con ese perfil, así que un
-  cliente no puede asignar lo que no ve.
-- **Valores dinámicos**: `object`, `JsonNode`/`JsonElement` y `SerializationValue` se escriben en todos los formatos.
-- Diagnósticos del generador: `CHRY001`–`CHRY006` (tipos no soportados, números o nombres repetidos, etc.).
+- **Profiles** choose members *and* conventions: naming, enums as names or numbers, nulls, defaults, indentation, depth limits, unknown members.
+- **Hidden means hidden both ways.** A member a profile cannot see is not read either, which blocks mass-assignment.
+- **Opt-in contracts** (`Mode = SerializationMode.OptIn`) only carry what is marked with `[Serialize]`.
+- **Dynamic values** (`object`, `JsonNode`, `JsonElement`, `SerializationValue`) work in every format.
+- **Interoperable:** Protobuf uses Google's `Timestamp`, `Duration` and `Value`, and the output reads with `Google.Protobuf`.
 
-## Chrysalis: servidor
-
-Un servicio se escribe una vez, como interfaz, y se expone por varios protocolos a la vez. Los contratos usan
-`Butterfly.Serialization` (mismos atributos y perfiles; `ChrysalisServerOptions.Profile`), y el generador crea
-además clientes tipados.
-
-| Paquete                          | Protocolo                                                                  |
-|----------------------------------|----------------------------------------------------------------------------|
-| `Butterfly.Chrysalis.Core`       | Servidor, middleware, estados (los de gRPC), clientes generados            |
-| `Butterfly.Chrysalis.Http`       | Servidor HTTP propio: HTTP/1.1, HTTP/2 (h2c y TLS con ALPN), límites       |
-| `Butterfly.Chrysalis.Rest`       | REST/JSON (`[HttpGet("ruta/{id}")]`…)                                      |
-| `Butterfly.Chrysalis.Soap`       | SOAP 1.1/1.2 con WSDL generado                                             |
-| `Butterfly.Chrysalis.JsonRpc`    | JSON-RPC 2.0 (lotes incluidos)                                             |
-| `Butterfly.Chrysalis.XmlRpc`     | XML-RPC                                                                    |
-| `Butterfly.Chrysalis.Grpc`       | gRPC sobre HTTP/2, con `.proto` generado                                   |
-| `Butterfly.Chrysalis.Binary`     | RPC binario propio sobre sockets, multiplexado, con TLS                    |
-| `Butterfly.Chrysalis.AspNetCore` | Los mismos protocolos dentro de ASP.NET Core, con inyección de dependencias |
+### 🦋 Chrysalis: write a service once, serve it six ways
 
 ```csharp
 [ChrysalisService(Namespace = "demo.v1", Route = "greeter")]
-public interface IGreeter { [HttpGet("hello/{name}")] Greeting Hello(string name); }
+public interface IGreeter
+{
+    [HttpGet("hello/{name}")]
+    Greeting Hello(string name);
+}
 
 var chrysalis = new ChrysalisServer().Expose<IGreeter>(new Greeter());
-var http = new HttpServer(options).MapRest(chrysalis).MapSoap(chrysalis).MapJsonRpc(chrysalis).MapGrpc(chrysalis);
 
-// Cliente tipado sobre el protocolo binario
+// REST, SOAP (with WSDL), JSON-RPC, XML-RPC and gRPC on a single port, on Butterfly's own HTTP/1.1 + HTTP/2 server
+var http = new HttpServer(options)
+    .MapRest(chrysalis, "/api")
+    .MapSoap(chrysalis, "/soap")
+    .MapJsonRpc(chrysalis, "/rpc")
+    .MapXmlRpc(chrysalis, "/xmlrpc")
+    .MapGrpc(chrysalis);
+
+// ...or over the multiplexed binary protocol, with a generated typed client
 await using var connection = await ChrysalisBinaryClient.ConnectAsync("127.0.0.1", port);
-var greeter = connection.CreateClient<IGreeter>();
+IGreeter greeter = connection.CreateClient<IGreeter>();
 ```
 
-En ASP.NET Core:
+Prefer ASP.NET Core? The same services plug into dependency injection, authorization and Kestrel:
 
 ```csharp
-builder.Services.AddChrysalis(c => c.Expose<IGreeter, Greeter>());   // Scoped por defecto
+builder.Services.AddChrysalis(c => c.Expose<IGreeter, Greeter>());
+
 app.UseChrysalisGrpc();
 app.MapChrysalisRest().RequireAuthorization();
 app.MapChrysalisSoap();
 app.MapChrysalisJsonRpc();
-// Servidores propios como IHostedService: AddChrysalisHttpServer(...) y AddChrysalisBinaryServer(...)
 ```
 
-Servicios listos para exponer (`Butterfly.<Área>.Chrysalis`):
+**Ready-made services.** Scripting, Workflows, SystemInfo and Virtualization each ship a `*.Chrysalis` package. Library errors map to statuses such as `NotFound`, `InvalidArgument` and `FailedPrecondition`, and each protocol translates them into its own form: HTTP codes, SOAP faults, JSON-RPC errors or gRPC statuses.
 
-| Paquete                              | Ruta REST          | Servicio                                                         |
-|--------------------------------------|--------------------|------------------------------------------------------------------|
-| `Butterfly.Scripting.Chrysalis`      | `scripts`          | Ejecutar scripts (C#, Lua...) con el `IScriptInvoker` registrado  |
-| `Butterfly.Workflows.Chrysalis`      | `workflows`        | Definiciones, instancias, eventos, transiciones, grafos y Mermaid |
-| `Butterfly.SystemInfo.Chrysalis`     | `system`           | CPU, memoria y sistema operativo                                 |
-| `Butterfly.Virtualization.Chrysalis` | `virtualization`   | Máquinas virtuales y checkpoints sobre el `IHypervisor` registrado |
+### 📡 Communication: secure by default
 
-Los errores de cada librería se traducen a estados (`NotFound`, `InvalidArgument`, `FailedPrecondition`...), que
-cada protocolo convierte a lo suyo (código HTTP, fault SOAP, error JSON-RPC, estado gRPC).
+```csharp
+using var smtp = new SmtpClient();
+smtp.Connect("smtp.example.com");            // port 587, STARTTLS required
+smtp.Authenticate("user", "password");
+smtp.Send(new MailMessage
+{
+    From = "me@example.com",
+    To = { "you@example.com" },
+    Subject = "Hello",
+    TextBody = "Sent with Butterfly"
+});
+```
 
-## Extender
+| Client | Protocol | Ports (TLS) |
+|---|---|---|
+| `Dns` | A, AAAA, CNAME, MX, TXT, NS, PTR, SRV, SOA, CAA over UDP + TCP, EDNS | 53 |
+| `Http` | HTTP/1.1: keep-alive, chunked, gzip/deflate/br, redirects, cookies, forms, multipart | 80 (443) |
+| `WebSockets` | `ws://` and `wss://` | 80 (443) |
+| `Mail` | MIME messages: text, HTML, attachments, inline images, encoded headers | |
+| `Smtp` | STARTTLS, PLAIN / LOGIN / CRAM-MD5 / XOAUTH2 | 587, 25 (465) |
+| `Pop3` | STLS, SASL, UIDL, TOP | 110 (995) |
+| `Imap` | Folders, search, fetch, flags, move, append, XOAUTH2 | 143 (993) |
+| `Ftp` | FTP and FTPS (explicit and implicit, encrypted data channel), MLSD/LIST, resume | 21 (990) |
+| `Ntp` | SNTP: clock offset and round-trip delay | 123 |
+| `Mqtt` | MQTT 3.1.1: QoS 0/1/2, retained messages, wills, persistent sessions | 1883 (8883) |
 
-| Quiero...                    | Hago...                                                                                     |
-|------------------------------|---------------------------------------------------------------------------------------------|
-| Nuevo protocolo              | `src/Communication/Butterfly.Communication.<X>/` referenciando Core. Si es de conexión, heredar de `ProtocolClient` (TLS, credenciales, cierre) y leer con `Connection.Reader`. Tests en `tests/Communication/` usando `TestServer` (servidor falso con guion, ya incluido). |
-| Nueva librería               | `src/<Área>/Butterfly.<Área>.<Módulo>/` con un csproj que solo tenga `Title` y `Description`, y añadirla a `Butterfly.slnx`. Se publica y entra en el catálogo de `butterfly` sola. |
-| Tests de una librería        | `tests/<Área>/Butterfly.<Área>.<Módulo>.Tests/` con un csproj que solo tenga el `ProjectReference`. xUnit e `InternalsVisibleTo` son automáticos. |
-| Paquete de terceros          | Versión en `Directory.Packages.props`, `PackageReference` sin versión en el csproj.           |
-| Comando nuevo en la CLI      | Implementar `ICommand` en `tools/Butterfly.Tool/Commands/` y registrarlo en `Program.cs`.    |
-| Ejemplo                      | Proyecto en `samples/` con `Sdk="Butterfly.Sdk/x.y.z"` y añadirlo a `samples/Samples.slnx`.  |
+<details>
+<summary><b>Rules every client follows</b></summary>
+
+- **TLS by default** (`TlsMode.Auto`): implicit TLS on the secure port and **mandatory** STARTTLS elsewhere. If the server does not offer it, the connection fails instead of continuing in clear text. Use `TlsMode.StartTlsWhenAvailable` or `None` to opt out. Certificates are always validated unless `TlsOptions` says otherwise.
+- **No clear-text passwords.** Authenticating without TLS to a remote host throws unless `AllowInsecureAuthentication = true`. Loopback is allowed.
+- **Timeouts everywhere.** `ConnectionOptions` sets the connect, read and write timeouts, and the sockets enforce them at the OS level.
+- **Name resolution** goes literal IP → `localhost` → hosts file → Butterfly DNS → system resolver, which covers search domains, mDNS and VPNs.
+- **Sync + `…Async`.** Operations block. The async versions run on the pool, and cancelling aborts the connection.
+- **`HttpClient` without ambiguity.** The HTTP package removes the implicit `using System.Net.Http`. Set `ButterflyKeepSystemNetHttpUsing=true` to keep it.
+
+</details>
+
+### 📜 Scripting, 🔀 Workflows, 🖥️ SystemInfo, ☁️ Virtualization
+
+- **Scripting** runs C# (Roslyn) and Lua (MoonSharp or NLua) behind one `IScriptInvoker`, with parameters, timeouts, validation, logging and telemetry.
+- **Workflows** runs processes defined in JSON: branches, wait nodes, event and manual transitions, validation pipelines, jumps, script steps, and graphs rendered as Mermaid.
+- **SystemInfo** detects the CPU (vendor, model, cores and packages, instruction-set features, virtualization support, hypervisor and VM detection), memory and operating system on Windows and Linux.
+- **Virtualization** creates, starts, pauses, saves and checkpoints virtual machines on Hyper-V and libvirt/KVM, and checks whether the host is ready to run them.
+
+## 🏗️ Building from source
+
+```powershell
+./build.ps1              # Pack: build everything and publish to Packages/Release/Butterfly
+./build.ps1 Test         # run the test suites
+./build.ps1 Samples      # build the samples against the local feed
+./build.ps1 InstallTool  # install or reinstall the global "butterfly" tool
+./build.ps1 Clean        # remove this version from the feed and the NuGet cache
+./build.ps1 All          # Pack + Test + InstallTool + Samples
+```
+
+> [!IMPORTANT]
+> Do not delete the `Packages/Release/Butterfly` folder by hand. It is registered as a NuGet source, and without it every restore on the machine fails with `NU1301`. Use `./build.ps1 Clean` to start fresh.
+
+Building in `Release`, from Visual Studio too, publishes the packages and evicts that version from `~/.nuget/packages`, so consumers pick up changes even when the version number has not moved. Pass `-p:ButterflyEvictPackageCache=false` to keep the cache.
+
+<details>
+<summary><b>Repository layout</b></summary>
+
+```
+Butterfly.slnx               Single solution with the whole framework (src, tests, tools)
+Directory.Build.props        Common settings: version, signing, packaging, AOT
+Directory.Build.targets      Conventions: InternalsVisibleTo, NuGet cache eviction, catalog
+Directory.Packages.props     Central versions of third-party packages
+NuGet.config                 Local feed "Butterfly" -> Packages/Release/Butterfly
+build.ps1                    Build / Test / Pack / Clean / InstallTool / Samples / All
+eng/                         Logo and strong-name key
+src/
+  Butterfly.Sdk/             MSBuild SDK; Sdk/Butterfly.Version.props is the ONLY source of the version
+  <Area>/Butterfly.<Area>.<Module>/
+tests/
+  <Area>/Butterfly.<Area>.<Module>.Tests/
+tools/
+  Butterfly.Tool/            The "butterfly" CLI
+samples/                     Package consumers, isolated from the framework build
+```
+
+</details>
+
+<details>
+<summary><b>Framework vs. consumers</b></summary>
+
+The framework builds **from source only**. The packages in the feed are for consumers.
+
+| Project | SDK | Butterfly dependencies |
+|---|---|---|
+| Framework (`src/`, `tests/`, `tools/`) | `Microsoft.NET.Sdk` | `ProjectReference` |
+| Consumer (`samples/`, other solutions) | `Butterfly.Sdk/x.y.z` | `PackageReference` without a version |
+
+If a framework project used `Butterfly.Sdk` or a `Butterfly.*` package, it would depend on its own output and would only build while the feed held an older build. The build stops that with an explanatory error, and `butterfly add` and `butterfly init` refuse to touch framework projects.
+
+</details>
+
+### Versioning
+
+The version lives in exactly one place: `src/Butterfly.Sdk/Sdk/Butterfly.Version.props`. Every library, `Butterfly.Sdk` and `Butterfly.Tool` ship with it. A reference with an explicit `Version` (or `VersionOverride` under central package management) is pinned and the SDK leaves it alone.
+
+## 🧰 The `butterfly` CLI
+
+The CLI always installs packages at the framework version it was built with.
+
+```
+butterfly list                     Available packages (* = referenced by the project)
+butterfly add Networking.Sockets   Add packages (short or full name)
+butterfly remove Networking.Sockets
+butterfly init                     Move the project to Butterfly.Sdk (or update its version)
+butterfly version
+```
+
+Common options are `-p|--project <path>` and `--no-restore`. If the restore fails, the changes are rolled back. Depending on the project, `add` writes:
+
+- with **Butterfly.Sdk**: a reference without a version, which the SDK fills in;
+- with **central package management**: a `PackageVersion` at the framework version;
+- otherwise: `Version="<framework version>"` on the reference.
+
+After bumping the framework version, run `./build.ps1 All`, then `butterfly init` in each consumer project, including those in `samples/`.
+
+## 🧭 Design principles
+
+- **Compile-time over runtime.** Source generators instead of reflection, `IsAotCompatible` on every library.
+- **Secure defaults.** TLS on, certificates validated, no clear-text credentials, serialization profiles that hide members in both directions.
+- **Small packages, one version.** Areas split into modules, all released together through `Butterfly.Sdk`.
+- **Tested against the real thing.** Protocol tests run against scripted fake servers, real Kestrel or `Grpc.Net.Client`, and the reference libraries of each format.
+
+## 🤝 Extending Butterfly
+
+| I want to... | Do this |
+|---|---|
+| Add a library | Create `src/<Area>/Butterfly.<Area>.<Module>/` with a csproj holding only `Title` and `Description`, then add it to `Butterfly.slnx`. It is packed and listed by `butterfly` automatically. |
+| Test it | Create `tests/<Area>/Butterfly.<Area>.<Module>.Tests/` with just the `ProjectReference`. xUnit and `InternalsVisibleTo` are wired up for you. |
+| Add a protocol client | Use `src/Communication/Butterfly.Communication.<X>/` referencing `Core`. Connection-based clients derive from `ProtocolClient` (TLS, credentials, shutdown) and read through `Connection.Reader`. Test them with `TestServer`, the scripted fake server in `tests/Communication/`. |
+| Expose a library over Chrysalis | Add `Butterfly.<Area>.Chrysalis` with a `[ChrysalisService]` interface and translate the library's exceptions into `ChrysalisException` statuses. |
+| Use a third-party package | Put its version in `Directory.Packages.props` and reference it without a version. |
+| Add a CLI command | Implement `ICommand` in `tools/Butterfly.Tool/Commands/` and register it in `Program.cs`. |
+| Add a sample | Create a project in `samples/` with `Sdk="Butterfly.Sdk/x.y.z"` and add it to `samples/Samples.slnx`. |
+
+---
+
+<div align="center">
+
+<img src="eng/Butterfly-readme.png" alt="" width="32" />
+
+Made by **Antril Organization** · [antril.org/Butterfly](https://www.antril.org/Butterfly/)
+
+</div>
