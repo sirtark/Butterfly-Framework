@@ -86,6 +86,7 @@ namespace Butterfly.Communication.Http
         public HttpResponse Post(string uri, HttpContent content) => Send(HttpRequest.Post(uri, content));
         public HttpResponse Put(string uri, HttpContent content) => Send(HttpRequest.Put(uri, content));
         public HttpResponse Patch(string uri, HttpContent content) => Send(HttpRequest.Patch(uri, content));
+        public HttpResponse Query(string uri, HttpContent content) => Send(HttpRequest.Query(uri, content));
         public HttpResponse Delete(string uri) => Send(HttpRequest.Delete(uri));
 
         /// <exception cref="HttpStatusException">The status code is not 2xx.</exception>
@@ -152,6 +153,7 @@ namespace Butterfly.Communication.Http
         private static HttpRequest Redirect(HttpRequest request, int status, Uri target)
         {
             // 303 always becomes GET; 301/302 turn POST into GET (what every browser does); 307/308 keep everything.
+            // QUERY (RFC 10008) is safe, so 301/302/307/308 repeat it, body included, at the new target.
             bool toGet = (status == 303 && request.Method != HttpMethod.Head) || (status is 301 or 302 && request.Method == HttpMethod.Post);
 
             if (!toGet && request.Content is { IsReplayable: false })
@@ -242,7 +244,7 @@ namespace Butterfly.Communication.Http
                 else
                     headers.Set("Transfer-Encoding", "chunked");
             }
-            else if (request.Method is HttpMethod.Post or HttpMethod.Put or HttpMethod.Patch)
+            else if (request.Method is HttpMethod.Post or HttpMethod.Put or HttpMethod.Patch or HttpMethod.Query)
             {
                 // RFC 9110: a request that usually has a body says explicitly that this one is empty.
                 headers.Set("Content-Length", "0");

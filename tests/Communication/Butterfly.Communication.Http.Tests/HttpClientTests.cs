@@ -126,6 +126,65 @@ namespace Butterfly.Communication.Http.Tests
         }
 
         [Fact]
+        public void QuerySendsItsContentLikePost()
+        {
+            var received = new List<ReceivedRequest>();
+            using var server = new TestServer(session =>
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    received.Add(ReadRequest(session));
+                    Respond(session, 200, """[{"id":1}]""", "application/json");
+                }
+            });
+
+            using var client = new HttpClient();
+            using HttpResponse found = client.Query($"http://127.0.0.1:{server.Port}/contacts?limit=5", HttpContent.FromJson("""{"name":"Ana"}"""));
+            using HttpResponse empty = client.Send(new HttpRequest(HttpMethod.Query, $"http://127.0.0.1:{server.Port}/contacts"));
+            server.Wait();
+
+            Assert.Equal("""[{"id":1}]""", found.ReadAsString());
+            Assert.Equal("QUERY /contacts?limit=5 HTTP/1.1", received[0].RequestLine);
+            Assert.StartsWith("application/json", received[0].Headers["content-type"]);
+            Assert.Equal("""{"name":"Ana"}""", received[0].Body);
+            // Like POST, a QUERY without content says so explicitly (RFC 9110).
+            Assert.Equal("QUERY /contacts HTTP/1.1", received[1].RequestLine);
+            Assert.Equal("0", received[1].Headers["content-length"]);
+        }
+
+        [Theory]
+        [InlineData(301, "QUERY")]
+        [InlineData(302, "QUERY")]
+        [InlineData(307, "QUERY")]
+        [InlineData(308, "QUERY")]
+        [InlineData(303, "GET")]
+        public void QueryRedirectsKeepTheMethodExceptSeeOther(int status, string method)
+        {
+            ReceivedRequest? final = null;
+            using var target = new TestServer(session =>
+            {
+                final = ReadRequest(session);
+                Respond(session, 200, "resultados");
+            });
+
+            using var origin = new TestServer(session =>
+            {
+                ReadRequest(session);
+                session.Write($"HTTP/1.1 {status} Moved\r\nLocation: http://127.0.0.1:{target.Port}/final\r\nContent-Length: 0\r\n\r\n");
+            });
+
+            using var client = new HttpClient();
+            using HttpResponse response = client.Query($"http://127.0.0.1:{origin.Port}/buscar", HttpContent.FromJson("""{"q":"x"}"""));
+            target.Wait();
+
+            Assert.Equal("resultados", response.ReadAsString());
+            Assert.Equal($"{method} /final HTTP/1.1", final!.RequestLine);
+            // 303 means "GET the results there": the query content is not sent again.
+            Assert.Equal(method == "QUERY" ? """{"q":"x"}""" : "", final.Body);
+            Assert.Equal(method == "QUERY", final.Headers.ContainsKey("content-type"));
+        }
+
+        [Fact]
         public void HttpsWithTrustedCertificate()
         {
             using var server = new TestServer(session =>
