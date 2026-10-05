@@ -306,6 +306,8 @@ After bumping the framework version, run `./build.ps1 All`, then `butterfly init
 
 ## 🤝 Extending Butterfly
 
+Branches, the issue-to-release flow and commit conventions are in [CONTRIBUTING.md](CONTRIBUTING.md).
+
 | I want to... | Do this |
 |---|---|
 | Add a library | Create `src/<Area>/Butterfly.<Area>.<Module>/` with a csproj holding only `Title` and `Description`, then add it to `Butterfly.slnx`. It is packed and listed by `butterfly` automatically. |
