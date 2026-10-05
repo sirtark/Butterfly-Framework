@@ -1,6 +1,8 @@
 ## Butterfly
 # Local NuGet feed: build.ps1 / Release builds publish every package here (regenerated on each build).
 /Packages/
+# Internal planning notes.
+/ROADMAP.md
 # Build, test and analysis output.
 /artifacts/
 [Tt]est[Rr]esults/
