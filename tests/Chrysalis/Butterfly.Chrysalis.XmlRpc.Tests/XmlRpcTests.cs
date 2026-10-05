@@ -48,7 +48,7 @@ namespace Butterfly.Chrysalis.XmlRpc.Tests
             var methods = Value(await Call("system.listMethods")).Descendants("string").Select(element => element.Value).ToList();
 
             Assert.Contains("InventoryService.GetProduct", methods);
-            Assert.Equal(9, methods.Count);
+            Assert.Equal(10, methods.Count);
         }
 
         [Fact]

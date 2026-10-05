@@ -51,4 +51,10 @@ namespace Butterfly.Chrysalis
     public sealed class HttpPutAttribute(string? route = null) : HttpMethodAttribute("PUT", route);
     public sealed class HttpPatchAttribute(string? route = null) : HttpMethodAttribute("PATCH", route);
     public sealed class HttpDeleteAttribute(string? route = null) : HttpMethodAttribute("DELETE", route);
+
+    /// <summary>
+    /// QUERY (RFC 10008): a safe, idempotent read whose input travels in a JSON body, like POST, for searches too large or
+    /// too structured for a query string. Route and query-string parameters still bind as usual.
+    /// </summary>
+    public sealed class HttpQueryAttribute(string? route = null) : HttpMethodAttribute("QUERY", route);
 }

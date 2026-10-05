@@ -162,6 +162,15 @@ app.MapChrysalisSoap();
 app.MapChrysalisJsonRpc();
 ```
 
+**REST verbs, QUERY included.** `[HttpGet]`, `[HttpPost]`, `[HttpPut]`, `[HttpPatch]` and `[HttpDelete]` bind an operation to a route. `[HttpQuery]` uses the [QUERY method (RFC 10008)](https://www.rfc-editor.org/rfc/rfc10008): a safe, idempotent read whose input travels in a JSON body, for searches too large or too structured for a URL. Scalars still bind from the route and the query string, and the path advertises itself with `Accept-Query` and `OPTIONS`.
+
+```csharp
+[HttpQuery("search")]                 // QUERY /api/inventory/search?limit=10  {"categories":["Books"],"maxPrice":20}
+Task<IReadOnlyList<Product>> Find(ProductFilter filter, int? limit);
+```
+
+The `Butterfly.Communication.Http` client speaks it too: `client.Query(uri, HttpContent.FromJson(json))`.
+
 **Ready-made services.** Scripting, Workflows, SystemInfo and Virtualization each ship a `*.Chrysalis` package. Library errors map to statuses such as `NotFound`, `InvalidArgument` and `FailedPrecondition`, and each protocol translates them into its own form: HTTP codes, SOAP faults, JSON-RPC errors or gRPC statuses.
 
 ### 📡 Communication: secure by default

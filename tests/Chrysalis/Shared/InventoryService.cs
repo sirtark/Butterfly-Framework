@@ -13,6 +13,14 @@ namespace Butterfly.Chrysalis.Tests.Inventory
     // Positional record: built through its constructor.
     public sealed record Product(int Id, string Name, decimal Price, Category Category, IReadOnlyList<string> Tags, DateTimeOffset? CreatedAt = null);
 
+    // The body of a QUERY search.
+    public sealed class ProductFilter
+    {
+        public string? Text { get; init; }
+        public List<Category> Categories { get; init; } = [];
+        public decimal? MaxPrice { get; init; }
+    }
+
     // Every supported kind of member, built through init-only setters.
     public sealed class Sample
     {
@@ -56,6 +64,10 @@ namespace Butterfly.Chrysalis.Tests.Inventory
         [HttpDelete("products/{id}")]
         Task Delete(int id);
 
+        // QUERY inventory/search (RFC 10008): the filter is the body; "limit" may come in the query string.
+        [HttpQuery("search")]
+        Task<IReadOnlyList<Product>> Find(ProductFilter filter, int? limit);
+
         Sample Echo(Sample sample);
 
         void Fail(ChrysalisStatus status, string message);
@@ -84,6 +96,14 @@ namespace Butterfly.Chrysalis.Tests.Inventory
                 .Where(product => text is null || product.Name.Contains(text, StringComparison.OrdinalIgnoreCase))
                 .Where(product => category is null || product.Category == category)
                 .OrderBy(product => product.Id)]);
+
+        public Task<IReadOnlyList<Product>> Find(ProductFilter filter, int? limit) =>
+            Task.FromResult<IReadOnlyList<Product>>([.. products.Values
+                .Where(product => filter.Text is null || product.Name.Contains(filter.Text, StringComparison.OrdinalIgnoreCase))
+                .Where(product => filter.Categories.Count == 0 || filter.Categories.Contains(product.Category))
+                .Where(product => filter.MaxPrice is null || product.Price <= filter.MaxPrice)
+                .OrderBy(product => product.Id)
+                .Take(limit ?? int.MaxValue)]);
 
         public Task<Product> AddProduct(Product product)
         {
