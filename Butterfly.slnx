@@ -1,0 +1,156 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="build.ps1" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Build.targets" />
+    <File Path="Directory.Packages.props" />
+    <File Path="NuGet.config" />
+    <File Path="README.md" />
+    <File Path="src/Scripting/Directory.Build.props" />
+    <File Path="src/SystemInfo/Directory.Build.props" />
+    <File Path="src/Virtualization/Directory.Build.props" />
+    <File Path="src/Workflows/Directory.Build.props" />
+    <File Path="tests/Directory.Build.props" />
+    <File Path="tests/Chrysalis/Directory.Build.props" />
+    <File Path="tests/Communication/Directory.Build.props" />
+    <File Path="tests/Serialization/Directory.Build.props" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/Butterfly.Sdk/Butterfly.Sdk.csproj" />
+  </Folder>
+  <Folder Name="/src/Chrysalis/">
+    <Project Path="src/Chrysalis/Butterfly.Chrysalis.Core/Butterfly.Chrysalis.Core.csproj" />
+    <Project Path="src/Chrysalis/Butterfly.Chrysalis.Http/Butterfly.Chrysalis.Http.csproj" />
+    <Project Path="src/Chrysalis/Butterfly.Chrysalis.Rest/Butterfly.Chrysalis.Rest.csproj" />
+    <Project Path="src/Chrysalis/Butterfly.Chrysalis.Soap/Butterfly.Chrysalis.Soap.csproj" />
+    <Project Path="src/Chrysalis/Butterfly.Chrysalis.JsonRpc/Butterfly.Chrysalis.JsonRpc.csproj" />
+    <Project Path="src/Chrysalis/Butterfly.Chrysalis.XmlRpc/Butterfly.Chrysalis.XmlRpc.csproj" />
+    <Project Path="src/Chrysalis/Butterfly.Chrysalis.Grpc/Butterfly.Chrysalis.Grpc.csproj" />
+    <Project Path="src/Chrysalis/Butterfly.Chrysalis.AspNetCore/Butterfly.Chrysalis.AspNetCore.csproj" />
+    <Project Path="src/Chrysalis/Butterfly.Chrysalis.Binary/Butterfly.Chrysalis.Binary.csproj" />
+  </Folder>
+  <Folder Name="/src/Communication/">
+    <Project Path="src/Communication/Butterfly.Communication.Core/Butterfly.Communication.Core.csproj" />
+    <Project Path="src/Communication/Butterfly.Communication.Dns/Butterfly.Communication.Dns.csproj" />
+    <Project Path="src/Communication/Butterfly.Communication.Ftp/Butterfly.Communication.Ftp.csproj" />
+    <Project Path="src/Communication/Butterfly.Communication.Http/Butterfly.Communication.Http.csproj" />
+    <Project Path="src/Communication/Butterfly.Communication.Imap/Butterfly.Communication.Imap.csproj" />
+    <Project Path="src/Communication/Butterfly.Communication.Mail/Butterfly.Communication.Mail.csproj" />
+    <Project Path="src/Communication/Butterfly.Communication.Mqtt/Butterfly.Communication.Mqtt.csproj" />
+    <Project Path="src/Communication/Butterfly.Communication.Ntp/Butterfly.Communication.Ntp.csproj" />
+    <Project Path="src/Communication/Butterfly.Communication.Pop3/Butterfly.Communication.Pop3.csproj" />
+    <Project Path="src/Communication/Butterfly.Communication.Smtp/Butterfly.Communication.Smtp.csproj" />
+    <Project Path="src/Communication/Butterfly.Communication.WebSockets/Butterfly.Communication.WebSockets.csproj" />
+  </Folder>
+  <Folder Name="/src/DesignPatterns/">
+    <Project Path="src/DesignPatterns/Butterfly.DesignPatterns.Behavioral/Butterfly.DesignPatterns.Behavioral.csproj" />
+    <Project Path="src/DesignPatterns/Butterfly.DesignPatterns.Creational/Butterfly.DesignPatterns.Creational.csproj" />
+    <Project Path="src/DesignPatterns/Butterfly.DesignPatterns.Pipelines/Butterfly.DesignPatterns.Pipelines.csproj" />
+    <Project Path="src/DesignPatterns/Butterfly.DesignPatterns.StateMachines/Butterfly.DesignPatterns.StateMachines.csproj" />
+    <Project Path="src/DesignPatterns/Butterfly.DesignPatterns.Structural/Butterfly.DesignPatterns.Structural.csproj" />
+  </Folder>
+  <Folder Name="/src/Networking/">
+    <Project Path="src/Networking/Butterfly.Networking.Sockets/Butterfly.Networking.Sockets.csproj" />
+  </Folder>
+  <Folder Name="/src/Scripting/">
+    <Project Path="src/Scripting/Butterfly.Scripting.AspNetCore/Butterfly.Scripting.AspNetCore.csproj" />
+    <Project Path="src/Scripting/Butterfly.Scripting.Chrysalis/Butterfly.Scripting.Chrysalis.csproj" />
+    <Project Path="src/Scripting/Butterfly.Scripting.Core/Butterfly.Scripting.Core.csproj" />
+    <Project Path="src/Scripting/Butterfly.Scripting.CSharp/Butterfly.Scripting.CSharp.csproj" />
+    <Project Path="src/Scripting/Butterfly.Scripting.Lua/Butterfly.Scripting.Lua.csproj" />
+    <Project Path="src/Scripting/Butterfly.Scripting.Lua.MoonSharp/Butterfly.Scripting.Lua.MoonSharp.csproj" />
+    <Project Path="src/Scripting/Butterfly.Scripting.Lua.NLua/Butterfly.Scripting.Lua.NLua.csproj" />
+  </Folder>
+  <Folder Name="/src/Serialization/">
+    <Project Path="src/Serialization/Butterfly.Serialization.Core/Butterfly.Serialization.Core.csproj" />
+    <Project Path="src/Serialization/Butterfly.Serialization.Generators/Butterfly.Serialization.Generators.csproj" />
+    <Project Path="src/Serialization/Butterfly.Serialization.Json/Butterfly.Serialization.Json.csproj" />
+    <Project Path="src/Serialization/Butterfly.Serialization.Xml/Butterfly.Serialization.Xml.csproj" />
+    <Project Path="src/Serialization/Butterfly.Serialization.Protobuf/Butterfly.Serialization.Protobuf.csproj" />
+    <Project Path="src/Serialization/Butterfly.Serialization.MessagePack/Butterfly.Serialization.MessagePack.csproj" />
+    <Project Path="src/Serialization/Butterfly.Serialization.Cbor/Butterfly.Serialization.Cbor.csproj" />
+    <Project Path="src/Serialization/Butterfly.Serialization.Yaml/Butterfly.Serialization.Yaml.csproj" />
+    <Project Path="src/Serialization/Butterfly.Serialization.Csv/Butterfly.Serialization.Csv.csproj" />
+  </Folder>
+  <Folder Name="/src/SystemInfo/">
+    <Project Path="src/SystemInfo/Butterfly.SystemInfo.Core/Butterfly.SystemInfo.Core.csproj" />
+    <Project Path="src/SystemInfo/Butterfly.SystemInfo.CPU/Butterfly.SystemInfo.CPU.csproj" />
+    <Project Path="src/SystemInfo/Butterfly.SystemInfo.Chrysalis/Butterfly.SystemInfo.Chrysalis.csproj" />
+    <Project Path="src/SystemInfo/Butterfly.SystemInfo.Memory/Butterfly.SystemInfo.Memory.csproj" />
+    <Project Path="src/SystemInfo/Butterfly.SystemInfo.OS/Butterfly.SystemInfo.OS.csproj" />
+  </Folder>
+  <Folder Name="/src/Virtualization/">
+    <Project Path="src/Virtualization/Butterfly.Virtualization.Core/Butterfly.Virtualization.Core.csproj" />
+    <Project Path="src/Virtualization/Butterfly.Virtualization.Chrysalis/Butterfly.Virtualization.Chrysalis.csproj" />
+    <Project Path="src/Virtualization/Butterfly.Virtualization.HyperV/Butterfly.Virtualization.HyperV.csproj" />
+    <Project Path="src/Virtualization/Butterfly.Virtualization.Libvirt/Butterfly.Virtualization.Libvirt.csproj" />
+  </Folder>
+  <Folder Name="/src/Workflows/">
+    <Project Path="src/Workflows/Butterfly.Workflows.AspNetCore/Butterfly.Workflows.AspNetCore.csproj" />
+    <Project Path="src/Workflows/Butterfly.Workflows.Chrysalis/Butterfly.Workflows.Chrysalis.csproj" />
+    <Project Path="src/Workflows/Butterfly.Workflows.Core/Butterfly.Workflows.Core.csproj" />
+    <Project Path="src/Workflows/Butterfly.Workflows.Scripting/Butterfly.Workflows.Scripting.csproj" />
+  </Folder>
+  <Folder Name="/tests/" />
+  <Folder Name="/tests/Chrysalis/">
+    <Project Path="tests/Chrysalis/Butterfly.Chrysalis.AspNetCore.Tests/Butterfly.Chrysalis.AspNetCore.Tests.csproj" />
+    <Project Path="tests/Chrysalis/Butterfly.Chrysalis.Binary.Tests/Butterfly.Chrysalis.Binary.Tests.csproj" />
+    <Project Path="tests/Chrysalis/Butterfly.Chrysalis.Core.Tests/Butterfly.Chrysalis.Core.Tests.csproj" />
+    <Project Path="tests/Chrysalis/Butterfly.Chrysalis.Generators.Tests/Butterfly.Chrysalis.Generators.Tests.csproj" />
+    <Project Path="tests/Chrysalis/Butterfly.Chrysalis.Grpc.Tests/Butterfly.Chrysalis.Grpc.Tests.csproj" />
+    <Project Path="tests/Chrysalis/Butterfly.Chrysalis.Http.Tests/Butterfly.Chrysalis.Http.Tests.csproj" />
+    <Project Path="tests/Chrysalis/Butterfly.Chrysalis.Integration.Tests/Butterfly.Chrysalis.Integration.Tests.csproj" />
+    <Project Path="tests/Chrysalis/Butterfly.Chrysalis.JsonRpc.Tests/Butterfly.Chrysalis.JsonRpc.Tests.csproj" />
+    <Project Path="tests/Chrysalis/Butterfly.Chrysalis.Rest.Tests/Butterfly.Chrysalis.Rest.Tests.csproj" />
+    <Project Path="tests/Chrysalis/Butterfly.Chrysalis.Soap.Tests/Butterfly.Chrysalis.Soap.Tests.csproj" />
+    <Project Path="tests/Chrysalis/Butterfly.Chrysalis.XmlRpc.Tests/Butterfly.Chrysalis.XmlRpc.Tests.csproj" />
+  </Folder>
+  <Folder Name="/tests/Communication/">
+    <Project Path="tests/Communication/Butterfly.Communication.Core.Tests/Butterfly.Communication.Core.Tests.csproj" />
+    <Project Path="tests/Communication/Butterfly.Communication.Dns.Tests/Butterfly.Communication.Dns.Tests.csproj" />
+    <Project Path="tests/Communication/Butterfly.Communication.Ftp.Tests/Butterfly.Communication.Ftp.Tests.csproj" />
+    <Project Path="tests/Communication/Butterfly.Communication.Http.Tests/Butterfly.Communication.Http.Tests.csproj" />
+    <Project Path="tests/Communication/Butterfly.Communication.Imap.Tests/Butterfly.Communication.Imap.Tests.csproj" />
+    <Project Path="tests/Communication/Butterfly.Communication.Mail.Tests/Butterfly.Communication.Mail.Tests.csproj" />
+    <Project Path="tests/Communication/Butterfly.Communication.Mqtt.Tests/Butterfly.Communication.Mqtt.Tests.csproj" />
+    <Project Path="tests/Communication/Butterfly.Communication.Ntp.Tests/Butterfly.Communication.Ntp.Tests.csproj" />
+    <Project Path="tests/Communication/Butterfly.Communication.Pop3.Tests/Butterfly.Communication.Pop3.Tests.csproj" />
+    <Project Path="tests/Communication/Butterfly.Communication.Smtp.Tests/Butterfly.Communication.Smtp.Tests.csproj" />
+    <Project Path="tests/Communication/Butterfly.Communication.WebSockets.Tests/Butterfly.Communication.WebSockets.Tests.csproj" />
+  </Folder>
+  <Folder Name="/tests/Networking/">
+    <Project Path="tests/Networking/Butterfly.Networking.Sockets.Tests/Butterfly.Networking.Sockets.Tests.csproj" />
+  </Folder>
+  <Folder Name="/tests/Scripting/">
+    <Project Path="tests/Scripting/Butterfly.Scripting.Chrysalis.Tests/Butterfly.Scripting.Chrysalis.Tests.csproj" />
+  </Folder>
+  <Folder Name="/tests/Serialization/">
+    <Project Path="tests/Serialization/Butterfly.Serialization.Core.Tests/Butterfly.Serialization.Core.Tests.csproj" />
+    <Project Path="tests/Serialization/Butterfly.Serialization.Json.Tests/Butterfly.Serialization.Json.Tests.csproj" />
+    <Project Path="tests/Serialization/Butterfly.Serialization.Xml.Tests/Butterfly.Serialization.Xml.Tests.csproj" />
+    <Project Path="tests/Serialization/Butterfly.Serialization.Protobuf.Tests/Butterfly.Serialization.Protobuf.Tests.csproj" />
+    <Project Path="tests/Serialization/Butterfly.Serialization.MessagePack.Tests/Butterfly.Serialization.MessagePack.Tests.csproj" />
+    <Project Path="tests/Serialization/Butterfly.Serialization.Cbor.Tests/Butterfly.Serialization.Cbor.Tests.csproj" />
+    <Project Path="tests/Serialization/Butterfly.Serialization.Yaml.Tests/Butterfly.Serialization.Yaml.Tests.csproj" />
+    <Project Path="tests/Serialization/Butterfly.Serialization.Csv.Tests/Butterfly.Serialization.Csv.Tests.csproj" />
+  </Folder>
+  <Folder Name="/tests/SystemInfo/">
+    <Project Path="tests/SystemInfo/Butterfly.SystemInfo.CPU.Tests/Butterfly.SystemInfo.CPU.Tests.csproj" />
+    <Project Path="tests/SystemInfo/Butterfly.SystemInfo.Chrysalis.Tests/Butterfly.SystemInfo.Chrysalis.Tests.csproj" />
+    <Project Path="tests/SystemInfo/Butterfly.SystemInfo.Memory.Tests/Butterfly.SystemInfo.Memory.Tests.csproj" />
+    <Project Path="tests/SystemInfo/Butterfly.SystemInfo.OS.Tests/Butterfly.SystemInfo.OS.Tests.csproj" />
+  </Folder>
+  <Folder Name="/tests/Virtualization/">
+    <Project Path="tests/Virtualization/Butterfly.Virtualization.Core.Tests/Butterfly.Virtualization.Core.Tests.csproj" />
+    <Project Path="tests/Virtualization/Butterfly.Virtualization.Chrysalis.Tests/Butterfly.Virtualization.Chrysalis.Tests.csproj" />
+    <Project Path="tests/Virtualization/Butterfly.Virtualization.HyperV.Tests/Butterfly.Virtualization.HyperV.Tests.csproj" />
+    <Project Path="tests/Virtualization/Butterfly.Virtualization.Libvirt.Tests/Butterfly.Virtualization.Libvirt.Tests.csproj" />
+  </Folder>
+  <Folder Name="/tests/Workflows/">
+    <Project Path="tests/Workflows/Butterfly.Workflows.Tests/Butterfly.Workflows.Tests.csproj" />
+    <Project Path="tests/Workflows/Butterfly.Workflows.Chrysalis.Tests/Butterfly.Workflows.Chrysalis.Tests.csproj" />
+  </Folder>
+  <Folder Name="/tools/">
+    <Project Path="tools/Butterfly.Tool/Butterfly.Tool.csproj" />
+  </Folder>
+</Solution>

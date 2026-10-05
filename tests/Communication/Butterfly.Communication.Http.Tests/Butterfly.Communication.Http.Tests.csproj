@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Communication\Butterfly.Communication.Http\Butterfly.Communication.Http.csproj" />
+  </ItemGroup>
+
+</Project>

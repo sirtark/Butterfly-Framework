@@ -1,0 +1,16 @@
+<Project>
+
+  <!--
+    ImplicitUsings adds "global using System.Net.Http;", whose HttpClient and HttpContent clash with Butterfly's
+    and make every unqualified use ambiguous (CS0104). Projects that reference this package get the implicit
+    using removed; set ButterflyKeepSystemNetHttpUsing=true to keep it.
+  -->
+  <Target Name="ButterflyRemoveSystemNetHttpUsing"
+          BeforeTargets="GenerateGlobalUsings"
+          Condition="'$(ImplicitUsings)' == 'enable' and '$(ButterflyKeepSystemNetHttpUsing)' != 'true'">
+    <ItemGroup>
+      <Using Remove="System.Net.Http" />
+    </ItemGroup>
+  </Target>
+
+</Project>

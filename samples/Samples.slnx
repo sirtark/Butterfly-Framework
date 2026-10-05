@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Chrysalis/Chrysalis.csproj" />
+  <Project Path="Communication/Communication.csproj" />
+  <Project Path="Scripting/Scripting.csproj" />
+  <Project Path="Serialization/Serialization.csproj" />
+  <Project Path="Test/Test.csproj" />
+</Solution>

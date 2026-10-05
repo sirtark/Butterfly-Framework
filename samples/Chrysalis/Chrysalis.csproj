@@ -1,0 +1,20 @@
+<Project Sdk="Butterfly.Sdk/0.0.1">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <!-- The source generator comes inside Butterfly.Serialization.Core, a dependency of every protocol package. -->
+  <ItemGroup>
+    <PackageReference Include="Butterfly.Chrysalis.Rest" />
+    <PackageReference Include="Butterfly.Chrysalis.Soap" />
+    <PackageReference Include="Butterfly.Chrysalis.JsonRpc" />
+    <PackageReference Include="Butterfly.Chrysalis.XmlRpc" />
+    <PackageReference Include="Butterfly.Chrysalis.Grpc" />
+    <PackageReference Include="Butterfly.Chrysalis.Binary" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Communication Mail</Title>
+    <Description>E-mail messages and MIME (RFC 5322, 2045-2047, 2231): addresses, text and HTML bodies, attachments, inline images, encoded headers; writing and parsing. Shared by the SMTP, POP3 and IMAP clients.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Communication.Core\Butterfly.Communication.Core.csproj" />
+  </ItemGroup>
+
+</Project>

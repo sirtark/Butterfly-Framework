@@ -1,0 +1,12 @@
+<Project>
+
+  <!--
+    Samples behave like projects outside this repository: they do not inherit the framework build
+    settings and consume Butterfly through Butterfly.Sdk and the packages in the local feed.
+  -->
+  <PropertyGroup>
+    <ImportDirectoryPackagesProps>false</ImportDirectoryPackagesProps>
+    <ImportDirectoryBuildTargets>false</ImportDirectoryBuildTargets>
+  </PropertyGroup>
+
+</Project>

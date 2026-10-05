@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Serialization Cbor</Title>
+    <Description>CBOR (RFC 8949) format for Butterfly serialization: definite and indefinite lengths, standard date, decimal-fraction and bignum tags.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Serialization.Core\Butterfly.Serialization.Core.csproj" />
+  </ItemGroup>
+
+</Project>

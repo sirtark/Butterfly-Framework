@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Communication SMTP</Title>
+    <Description>SMTP client (RFC 5321): SMTPS and STARTTLS, PLAIN/LOGIN/CRAM-MD5/XOAUTH2 authentication, SIZE, SMTPUTF8 and per-recipient results.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Communication.Mail\Butterfly.Communication.Mail.csproj" />
+  </ItemGroup>
+
+</Project>

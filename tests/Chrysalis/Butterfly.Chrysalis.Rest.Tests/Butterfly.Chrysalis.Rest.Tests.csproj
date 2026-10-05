@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Chrysalis\Butterfly.Chrysalis.Rest\Butterfly.Chrysalis.Rest.csproj" />
+  </ItemGroup>
+
+</Project>

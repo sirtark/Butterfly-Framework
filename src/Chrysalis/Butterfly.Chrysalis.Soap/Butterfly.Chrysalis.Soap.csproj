@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Chrysalis SOAP</Title>
+    <Description>SOAP 1.1 and 1.2 binding for Chrysalis services (document/literal wrapped), with a generated WSDL 1.1 and faults that carry the Chrysalis status.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Chrysalis.Http\Butterfly.Chrysalis.Http.csproj" />
+    <ProjectReference Include="..\..\Serialization\Butterfly.Serialization.Xml\Butterfly.Serialization.Xml.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Serialization Json</Title>
+    <Description>JSON format for Butterfly serialization: System.Text.Json reader and writer, camelCase and enum names by default, relaxed escaping.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Serialization.Core\Butterfly.Serialization.Core.csproj" />
+  </ItemGroup>
+
+</Project>

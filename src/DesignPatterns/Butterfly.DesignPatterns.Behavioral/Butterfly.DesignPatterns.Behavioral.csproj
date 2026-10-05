@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Behavioural Design Patterns</Title>
+    <Description>Contracts for behavioural design patterns: commands, strategies, observers, handlers and validators.</Description>
+  </PropertyGroup>
+
+</Project>

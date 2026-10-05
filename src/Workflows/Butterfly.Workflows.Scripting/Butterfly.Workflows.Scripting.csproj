@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Workflows Scripting</Title>
+    <Description>Script steps and rules for Butterfly workflows, executed through Butterfly scripting.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Workflows.Core\Butterfly.Workflows.Core.csproj" />
+    <ProjectReference Include="..\..\Scripting\Butterfly.Scripting.Core\Butterfly.Scripting.Core.csproj" />
+  </ItemGroup>
+
+</Project>

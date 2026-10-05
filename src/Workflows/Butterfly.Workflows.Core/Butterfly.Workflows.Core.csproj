@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Workflows Core</Title>
+    <Description>Workflow engine: definitions, graph, components, runtime instances, persistence stores and JSON serialization.</Description>
+    <RootNamespace>Butterfly.Workflows</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+  </ItemGroup>
+
+</Project>

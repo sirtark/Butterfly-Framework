@@ -1,0 +1,18 @@
+<Project>
+
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)..'))" />
+
+  <!-- Providers call the OS directly (kernel32, sysctl) through LibraryImport. -->
+  <PropertyGroup>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <!--
+    Native interop and /proc parsing shared by every provider. It is compiled into each one as internal code
+    instead of living in Core, so Core stays a pure contract and none of these helpers become public API.
+  -->
+  <ItemGroup Condition="'$(MSBuildProjectName)' != 'Butterfly.SystemInfo.Core'">
+    <Compile Include="$(MSBuildThisFileDirectory)Shared\**\*.cs" LinkBase="Shared" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Chrysalis gRPC</Title>
+    <Description>gRPC binding for Chrysalis services over the Chrysalis HTTP/2 server: unary calls, Protocol Buffers messages, deadlines, gzip, and .proto generation for clients in any language.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Chrysalis.Http\Butterfly.Chrysalis.Http.csproj" />
+    <ProjectReference Include="..\..\Serialization\Butterfly.Serialization.Protobuf\Butterfly.Serialization.Protobuf.csproj" />
+  </ItemGroup>
+
+</Project>

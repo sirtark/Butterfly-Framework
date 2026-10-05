@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Workflows Chrysalis</Title>
+    <Description>Workflow definitions, instances, events and components as a Chrysalis service: what the ASP.NET Core endpoints offer, over REST, SOAP, JSON-RPC, XML-RPC, gRPC and binary RPC.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Workflows.Core\Butterfly.Workflows.Core.csproj" />
+    <ProjectReference Include="..\..\Chrysalis\Butterfly.Chrysalis.Core\Butterfly.Chrysalis.Core.csproj" />
+    <!-- The generator describes the service and its contracts into this assembly. -->
+    <ProjectReference Include="..\..\Serialization\Butterfly.Serialization.Generators\Butterfly.Serialization.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>

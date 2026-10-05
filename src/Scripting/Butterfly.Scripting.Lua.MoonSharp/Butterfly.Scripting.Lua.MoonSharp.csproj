@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Scripting Lua MoonSharp</Title>
+    <Description>MoonSharp engine for Butterfly Lua scripting: a fully managed Lua interpreter.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MoonSharp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Scripting.Lua\Butterfly.Scripting.Lua.csproj" />
+  </ItemGroup>
+
+</Project>

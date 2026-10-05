@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Creational Design Patterns</Title>
+    <Description>Contracts for creational design patterns: singletons and factories.</Description>
+  </PropertyGroup>
+
+</Project>

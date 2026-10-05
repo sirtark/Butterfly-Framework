@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Every protocol at once, against one service: what Chrysalis promises as a whole. -->
+  <ItemGroup>
+    <PackageReference Include="Grpc.Net.Client" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Chrysalis\Butterfly.Chrysalis.Rest\Butterfly.Chrysalis.Rest.csproj" />
+    <ProjectReference Include="..\..\..\src\Chrysalis\Butterfly.Chrysalis.Soap\Butterfly.Chrysalis.Soap.csproj" />
+    <ProjectReference Include="..\..\..\src\Chrysalis\Butterfly.Chrysalis.JsonRpc\Butterfly.Chrysalis.JsonRpc.csproj" />
+    <ProjectReference Include="..\..\..\src\Chrysalis\Butterfly.Chrysalis.XmlRpc\Butterfly.Chrysalis.XmlRpc.csproj" />
+    <ProjectReference Include="..\..\..\src\Chrysalis\Butterfly.Chrysalis.Grpc\Butterfly.Chrysalis.Grpc.csproj" />
+    <ProjectReference Include="..\..\..\src\Chrysalis\Butterfly.Chrysalis.Binary\Butterfly.Chrysalis.Binary.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Communication MQTT</Title>
+    <Description>MQTT 3.1.1 client: MQTTS, QoS 0/1/2 in both directions, retained messages, last will, persistent sessions, keep-alive and topic filter matching.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Communication.Core\Butterfly.Communication.Core.csproj" />
+  </ItemGroup>
+
+</Project>

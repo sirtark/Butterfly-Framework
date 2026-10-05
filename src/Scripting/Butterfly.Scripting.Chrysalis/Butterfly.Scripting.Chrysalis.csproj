@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Scripting Chrysalis</Title>
+    <Description>Script execution (through the registered IScriptInvoker: C#, Lua...) as a Chrysalis service, available over REST, SOAP, JSON-RPC, XML-RPC, gRPC and binary RPC.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Scripting.Core\Butterfly.Scripting.Core.csproj" />
+    <ProjectReference Include="..\..\Chrysalis\Butterfly.Chrysalis.Core\Butterfly.Chrysalis.Core.csproj" />
+    <!-- The generator describes the service and its contracts into this assembly. -->
+    <ProjectReference Include="..\..\Serialization\Butterfly.Serialization.Generators\Butterfly.Serialization.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>

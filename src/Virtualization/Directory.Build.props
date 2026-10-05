@@ -1,0 +1,13 @@
+<Project>
+
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)..'))" />
+
+  <!--
+    Process execution shared by the hypervisor providers (PowerShell, virsh). It is compiled into each provider as
+    internal code, so Core stays a pure contract and the runner does not become public API.
+  -->
+  <ItemGroup Condition="'$(MSBuildProjectName)' != 'Butterfly.Virtualization.Core'">
+    <Compile Include="$(MSBuildThisFileDirectory)Shared\**\*.cs" LinkBase="Shared" />
+  </ItemGroup>
+
+</Project>

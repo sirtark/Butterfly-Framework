@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Serialization MessagePack</Title>
+    <Description>MessagePack format for Butterfly serialization: compact maps keyed by member name, the timestamp extension, interoperable with other MessagePack libraries.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Serialization.Core\Butterfly.Serialization.Core.csproj" />
+  </ItemGroup>
+
+</Project>

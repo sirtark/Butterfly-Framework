@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly System Info Core</Title>
+    <Description>Contracts shared by the Butterfly system information providers (CPU, memory, operating system).</Description>
+    <RootNamespace>Butterfly.SystemInfo</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\DesignPatterns\Butterfly.DesignPatterns.Creational\Butterfly.DesignPatterns.Creational.csproj" />
+  </ItemGroup>
+
+</Project>

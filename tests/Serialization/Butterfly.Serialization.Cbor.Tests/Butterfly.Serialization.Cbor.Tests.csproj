@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Serialization\Butterfly.Serialization.Cbor\Butterfly.Serialization.Cbor.csproj" />
+  </ItemGroup>
+
+</Project>

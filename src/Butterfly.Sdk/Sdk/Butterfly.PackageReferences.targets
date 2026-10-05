@@ -1,0 +1,20 @@
+<Project>
+
+  <!--
+    Every Butterfly.* PackageReference without an explicit version follows the framework version,
+    so projects just write <PackageReference Include="Butterfly.Networking.Sockets" />.
+    Setting Version (or VersionOverride with central package management) on a reference pins it.
+  -->
+  <ItemGroup Condition="'$(ManagePackageVersionsCentrally)' != 'true'">
+    <PackageReference Update="Butterfly.*">
+      <Version Condition="'%(Version)' == ''">$(ButterflyVersion)</Version>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(ManagePackageVersionsCentrally)' == 'true'">
+    <PackageReference Update="Butterfly.*">
+      <VersionOverride Condition="'%(VersionOverride)' == ''">$(ButterflyVersion)</VersionOverride>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

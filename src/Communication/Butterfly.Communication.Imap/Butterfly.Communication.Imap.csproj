@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Communication IMAP</Title>
+    <Description>IMAP4rev1 client (RFC 3501): IMAPS and STARTTLS, LOGIN/SASL/XOAUTH2, folders, search, fetch of summaries and messages, flags, copy/move, expunge and append.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Communication.Mail\Butterfly.Communication.Mail.csproj" />
+  </ItemGroup>
+
+</Project>

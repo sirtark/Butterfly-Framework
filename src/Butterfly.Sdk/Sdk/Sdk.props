@@ -1,0 +1,20 @@
+<Project>
+
+  <!--
+    Butterfly.Sdk can be used in two ways:
+
+      <Project Sdk="Butterfly.Sdk/x.y.z">                 wraps Microsoft.NET.Sdk
+      <Project Sdk="Microsoft.NET.Sdk.Web">
+        <Sdk Name="Butterfly.Sdk" Version="x.y.z" />      additive, on top of any other .NET SDK
+  -->
+  <PropertyGroup>
+    <UsingButterflySdk>true</UsingButterflySdk>
+    <ButterflySdkDirectory>$(MSBuildThisFileDirectory)</ButterflySdkDirectory>
+    <_ButterflyImportsNETSdk Condition="'$(UsingMicrosoftNETSdk)' != 'true'">true</_ButterflyImportsNETSdk>
+  </PropertyGroup>
+
+  <Import Project="Butterfly.Version.props" />
+
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" Condition="'$(_ButterflyImportsNETSdk)' == 'true'" />
+
+</Project>

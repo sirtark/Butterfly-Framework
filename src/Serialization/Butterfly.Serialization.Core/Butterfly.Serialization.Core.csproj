@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Serialization Core</Title>
+    <Description>Format-independent serialization: contracts described at compile time by a source generator (no reflection), opt-in or opt-out members, profiles that choose members and conventions, dynamic values, and the base of the JSON, XML, Protocol Buffers, MessagePack, CBOR, YAML and CSV formats.</Description>
+    <RootNamespace>Butterfly.Serialization</RootNamespace>
+    <!-- NU5100: the generator is in generators/ on purpose (see below), not a lib/ reference. -->
+    <NoWarn>$(NoWarn);NU5100</NoWarn>
+  </PropertyGroup>
+
+  <!--
+    The generator ships in this package and is added through buildTransitive, so it also reaches projects that get this
+    package indirectly (NuGet does not flow analyzers/ to transitive dependents). In-repo projects reference the
+    generator project as an Analyzer instead.
+  -->
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Serialization.Generators\Butterfly.Serialization.Generators.csproj" ReferenceOutputAssembly="false" PrivateAssets="all" />
+    <None Include="..\Butterfly.Serialization.Generators\bin\$(Configuration)\netstandard2.0\Butterfly.Serialization.Generators.dll" Pack="true" PackagePath="generators/" Visible="false" />
+    <None Include="buildTransitive\Butterfly.Serialization.Core.targets" Pack="true" PackagePath="buildTransitive/" />
+  </ItemGroup>
+
+</Project>

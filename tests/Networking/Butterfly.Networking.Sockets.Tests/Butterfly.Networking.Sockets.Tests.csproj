@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Networking\Butterfly.Networking.Sockets\Butterfly.Networking.Sockets.csproj" />
+  </ItemGroup>
+
+</Project>

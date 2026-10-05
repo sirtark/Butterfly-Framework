@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Serialization Protobuf</Title>
+    <Description>Protocol Buffers (proto3) format for Butterfly serialization: field numbers from the contract, packed repeated fields, maps, google.protobuf.Timestamp and Value.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Serialization.Core\Butterfly.Serialization.Core.csproj" />
+  </ItemGroup>
+
+</Project>

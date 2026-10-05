@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <UsesChrysalisHttp>false</UsesChrysalisHttp>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Chrysalis\Butterfly.Chrysalis.Binary\Butterfly.Chrysalis.Binary.csproj" />
+  </ItemGroup>
+
+</Project>

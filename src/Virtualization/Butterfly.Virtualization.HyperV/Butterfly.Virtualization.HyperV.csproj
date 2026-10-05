@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Virtualization Hyper-V</Title>
+    <Description>Hyper-V provider for Butterfly virtualization: manages virtual machines and checkpoints through the Hyper-V PowerShell module.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Virtualization.Core\Butterfly.Virtualization.Core.csproj" />
+  </ItemGroup>
+
+</Project>

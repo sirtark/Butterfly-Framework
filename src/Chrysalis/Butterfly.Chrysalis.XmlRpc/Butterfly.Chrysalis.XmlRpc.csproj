@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Chrysalis XML-RPC</Title>
+    <Description>XML-RPC binding for Chrysalis services over HTTP, with the common i8 and nil extensions and system.listMethods introspection.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Chrysalis.Http\Butterfly.Chrysalis.Http.csproj" />
+  </ItemGroup>
+
+</Project>

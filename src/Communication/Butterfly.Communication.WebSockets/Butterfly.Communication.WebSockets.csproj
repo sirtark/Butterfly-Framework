@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Communication WebSockets</Title>
+    <Description>WebSocket client (RFC 6455) for ws:// and wss://: text and binary messages, fragmentation, automatic ping/pong, keep-alive and the close handshake.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Communication.Http\Butterfly.Communication.Http.csproj" />
+  </ItemGroup>
+
+</Project>

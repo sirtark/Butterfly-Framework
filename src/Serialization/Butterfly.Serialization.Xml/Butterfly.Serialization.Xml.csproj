@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Serialization Xml</Title>
+    <Description>XML format for Butterfly serialization: one element per member, repeated elements for lists, type hints for dynamic values, safe parsing (no DTD).</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Serialization.Core\Butterfly.Serialization.Core.csproj" />
+  </ItemGroup>
+
+</Project>

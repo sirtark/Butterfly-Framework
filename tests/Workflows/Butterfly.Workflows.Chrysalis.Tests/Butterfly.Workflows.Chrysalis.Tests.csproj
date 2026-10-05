@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Workflows\Butterfly.Workflows.Chrysalis\Butterfly.Workflows.Chrysalis.csproj" />
+    <ProjectReference Include="..\..\..\src\Chrysalis\Butterfly.Chrysalis.Binary\Butterfly.Chrysalis.Binary.csproj" />
+    <ProjectReference Include="..\..\..\src\Chrysalis\Butterfly.Chrysalis.Rest\Butterfly.Chrysalis.Rest.csproj" />
+  </ItemGroup>
+
+</Project>

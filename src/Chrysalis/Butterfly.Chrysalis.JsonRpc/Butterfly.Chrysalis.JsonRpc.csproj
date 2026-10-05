@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Chrysalis JSON-RPC</Title>
+    <Description>JSON-RPC 2.0 binding for Chrysalis services over HTTP: positional and named parameters, notifications and batches.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Chrysalis.Http\Butterfly.Chrysalis.Http.csproj" />
+    <ProjectReference Include="..\..\Serialization\Butterfly.Serialization.Json\Butterfly.Serialization.Json.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Scripting C#</Title>
+    <Description>C# script executor for Butterfly scripting, built on Roslyn scripting with compiled script caching.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Scripting.Core\Butterfly.Scripting.Core.csproj" />
+  </ItemGroup>
+
+</Project>

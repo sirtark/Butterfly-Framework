@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Communication NTP</Title>
+    <Description>SNTP client (RFC 4330 / 5905): network time, clock offset and round-trip delay, with Kiss-o'-Death and spoofing checks.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Communication.Core\Butterfly.Communication.Core.csproj" />
+  </ItemGroup>
+
+</Project>

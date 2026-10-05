@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly System Info Memory</Title>
+    <Description>Memory information: physical and available memory, swap, page size and container (cgroup) memory limits.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.SystemInfo.Core\Butterfly.SystemInfo.Core.csproj" />
+  </ItemGroup>
+
+</Project>

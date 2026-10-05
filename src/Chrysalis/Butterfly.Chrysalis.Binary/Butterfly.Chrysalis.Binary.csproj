@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Chrysalis Binary</Title>
+    <Description>Compact binary RPC for Chrysalis services over TCP (optionally TLS): multiplexed calls, cancellation, metadata and Protocol Buffers payloads, with a client that backs the generated typed clients.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Chrysalis.Core\Butterfly.Chrysalis.Core.csproj" />
+    <ProjectReference Include="..\..\Serialization\Butterfly.Serialization.Protobuf\Butterfly.Serialization.Protobuf.csproj" />
+    <ProjectReference Include="..\..\Communication\Butterfly.Communication.Core\Butterfly.Communication.Core.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,8 @@
+<Project>
+
+  <!-- Adds the Butterfly.Serialization source generator to every project that depends on this package, directly or not. -->
+  <ItemGroup>
+    <Analyzer Include="$(MSBuildThisFileDirectory)..\generators\Butterfly.Serialization.Generators.dll" />
+  </ItemGroup>
+
+</Project>

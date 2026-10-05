@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly System Info OS</Title>
+    <Description>Operating system information: family, kernel, name, version and distribution, plus container and WSL detection.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.SystemInfo.Core\Butterfly.SystemInfo.Core.csproj" />
+  </ItemGroup>
+
+</Project>

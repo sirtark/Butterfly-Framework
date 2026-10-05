@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Communication HTTP</Title>
+    <Description>HTTP/1.1 client over Butterfly sockets: HTTPS, keep-alive pooling, chunked transfer, gzip/deflate/brotli, redirects, cookies, forms and multipart uploads.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Communication.Core\Butterfly.Communication.Core.csproj" />
+  </ItemGroup>
+
+  <!-- Imported by projects that reference the package directly (see the file for why). -->
+  <ItemGroup>
+    <None Include="build\*.targets" Pack="true" PackagePath="build\" />
+  </ItemGroup>
+
+</Project>

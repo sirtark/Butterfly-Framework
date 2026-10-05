@@ -1,0 +1,13 @@
+<Project>
+
+  <!--
+    Single source of truth for the Butterfly framework version.
+
+    Every Butterfly project (libraries, Butterfly.Sdk and Butterfly.Tool) is built with this version,
+    and it ships inside Butterfly.Sdk so consumers resolve every Butterfly.* package to the same version.
+  -->
+  <PropertyGroup>
+    <ButterflyVersion>0.0.1</ButterflyVersion>
+  </PropertyGroup>
+
+</Project>

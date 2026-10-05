@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Pipelines Design Patterns</Title>
+    <Description>Contracts for pipeline design patterns.</Description>
+  </PropertyGroup>
+
+</Project>

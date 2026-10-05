@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Virtualization Core</Title>
+    <Description>Virtual machine management contracts: hypervisor abstraction, virtual machine specifications, checkpoints, and host readiness checks built on Butterfly system information.</Description>
+    <RootNamespace>Butterfly.Virtualization</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\SystemInfo\Butterfly.SystemInfo.CPU\Butterfly.SystemInfo.CPU.csproj" />
+    <ProjectReference Include="..\..\SystemInfo\Butterfly.SystemInfo.Memory\Butterfly.SystemInfo.Memory.csproj" />
+    <ProjectReference Include="..\..\SystemInfo\Butterfly.SystemInfo.OS\Butterfly.SystemInfo.OS.csproj" />
+  </ItemGroup>
+
+</Project>

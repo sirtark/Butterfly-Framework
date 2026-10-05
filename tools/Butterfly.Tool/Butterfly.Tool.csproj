@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Butterfly.Tool</RootNamespace>
+    <Title>Butterfly CLI</Title>
+    <Description>Adds Butterfly packages to a project, always at the framework version this tool was built with.</Description>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>butterfly</ToolCommandName>
+  </PropertyGroup>
+
+  <!--
+    The tool embeds the framework version and the catalog of packages it was built with, so it always
+    hands out packages that belong to the same release. New projects under src/ join the catalog automatically.
+  -->
+  <ItemGroup>
+    <ButterflyCatalogProject Include="$(ButterflyRoot)src\**\*.csproj" />
+    <AssemblyMetadata Include="ButterflyVersion" Value="$(ButterflyVersion)" />
+  </ItemGroup>
+
+  <Target Name="AddButterflyCatalog" BeforeTargets="GetAssemblyAttributes">
+    <MSBuild Projects="@(ButterflyCatalogProject)" Targets="GetButterflyPackage" BuildInParallel="true">
+      <Output TaskParameter="TargetOutputs" ItemName="_ButterflyCatalogPackage" />
+    </MSBuild>
+    <ItemGroup>
+      <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+        <_Parameter1>ButterflyPackage</_Parameter1>
+        <_Parameter2>%(_ButterflyCatalogPackage.Identity)|%(_ButterflyCatalogPackage.Description)</_Parameter2>
+      </AssemblyAttribute>
+    </ItemGroup>
+  </Target>
+
+</Project>

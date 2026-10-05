@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.Net.Client" />
+    <PackageReference Include="Google.Protobuf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Chrysalis\Butterfly.Chrysalis.Grpc\Butterfly.Chrysalis.Grpc.csproj" />
+  </ItemGroup>
+
+</Project>

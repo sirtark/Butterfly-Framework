@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly State Machine Design Patterns</Title>
+    <Description>Contracts for state machines: states and transitions.</Description>
+  </PropertyGroup>
+
+</Project>

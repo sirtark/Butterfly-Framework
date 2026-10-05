@@ -1,0 +1,21 @@
+<Project Sdk="Butterfly.Sdk/0.0.1">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <!-- The source generator comes inside Butterfly.Serialization.Core, a dependency of every format package. -->
+  <ItemGroup>
+    <PackageReference Include="Butterfly.Serialization.Json" />
+    <PackageReference Include="Butterfly.Serialization.Xml" />
+    <PackageReference Include="Butterfly.Serialization.Yaml" />
+    <PackageReference Include="Butterfly.Serialization.Csv" />
+    <PackageReference Include="Butterfly.Serialization.Protobuf" />
+    <PackageReference Include="Butterfly.Serialization.MessagePack" />
+    <PackageReference Include="Butterfly.Serialization.Cbor" />
+  </ItemGroup>
+
+</Project>

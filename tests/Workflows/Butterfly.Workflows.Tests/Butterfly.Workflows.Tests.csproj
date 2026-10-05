@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Workflows\Butterfly.Workflows.AspNetCore\Butterfly.Workflows.AspNetCore.csproj" />
+    <ProjectReference Include="..\..\..\src\Workflows\Butterfly.Workflows.Core\Butterfly.Workflows.Core.csproj" />
+    <ProjectReference Include="..\..\..\src\Workflows\Butterfly.Workflows.Scripting\Butterfly.Workflows.Scripting.csproj" />
+    <ProjectReference Include="..\..\..\src\Scripting\Butterfly.Scripting.CSharp\Butterfly.Scripting.CSharp.csproj" />
+    <ProjectReference Include="..\..\..\src\Scripting\Butterfly.Scripting.Lua.MoonSharp\Butterfly.Scripting.Lua.MoonSharp.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,7 @@
+<Project>
+
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" Condition="'$(_ButterflyImportsNETSdk)' == 'true'" />
+
+  <Import Project="Butterfly.PackageReferences.targets" />
+
+</Project>

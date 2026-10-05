@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Butterfly.Communication</RootNamespace>
+    <Title>Butterfly Communication Core</Title>
+    <Description>Shared building blocks for Butterfly protocol clients: connections with timeouts, TLS and STARTTLS, host name resolution, line-based protocol reading and SASL.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Networking\Butterfly.Networking.Sockets\Butterfly.Networking.Sockets.csproj" />
+    <ProjectReference Include="..\Butterfly.Communication.Dns\Butterfly.Communication.Dns.csproj" />
+  </ItemGroup>
+
+</Project>

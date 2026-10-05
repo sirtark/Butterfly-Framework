@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Chrysalis HTTP</Title>
+    <Description>HTTP server for Chrysalis built on Butterfly sockets: HTTP/1.1 (keep-alive, chunked requests, 100-continue) and HTTP/2 (HPACK, flow control, h2c and TLS with ALPN), with limits against slow and oversized requests.</Description>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Chrysalis.Core\Butterfly.Chrysalis.Core.csproj" />
+    <ProjectReference Include="..\..\Communication\Butterfly.Communication.Core\Butterfly.Communication.Core.csproj" />
+  </ItemGroup>
+
+</Project>

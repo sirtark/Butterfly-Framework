@@ -1,0 +1,53 @@
+<Project>
+
+  <!-- Convention: every library exposes its internals to "<AssemblyName>.Tests". -->
+  <ItemGroup Condition="'$(IsTestProject)' != 'true' and '$(OutputType)' == 'Library'">
+    <InternalsVisibleTo Include="$(AssemblyName).Tests" Key="$(ButterflyPublicKey)" />
+  </ItemGroup>
+
+  <!--
+    The framework must build from source alone. Depending on its own packages (Butterfly.Sdk or Butterfly.*
+    PackageReferences) creates a cycle: it only builds while the feed already holds a previous build.
+  -->
+  <Target Name="ButterflyValidateDependencies" BeforeTargets="_GenerateRestoreGraphProjectEntry;Build">
+    <ItemGroup>
+      <_ButterflyPackageReference Include="@(PackageReference)" Condition="$([System.String]::Copy('%(Identity)').StartsWith('Butterfly.'))" />
+    </ItemGroup>
+    <Error Condition="'$(UsingButterflySdk)' == 'true'"
+           Text="$(MSBuildProjectName) is part of the Butterfly framework and must use Sdk=&quot;Microsoft.NET.Sdk&quot;. Butterfly.Sdk is for consumers; framework projects already share the version through Directory.Build.props." />
+    <Error Condition="'@(_ButterflyPackageReference)' != ''"
+           Text="$(MSBuildProjectName) is part of the Butterfly framework and references @(_ButterflyPackageReference) as a package. Use a ProjectReference to the project instead." />
+  </Target>
+
+  <!--
+    The feed folder is registered as a NuGet source: if it does not exist, NuGet fails every restore that
+    has to look up a package (NU1301), even in unrelated projects. Recreate it before restoring or building.
+  -->
+  <Target Name="ButterflyEnsurePackageFeed" BeforeTargets="_GenerateRestoreGraphProjectEntry;Build">
+    <MakeDir Directories="$(ButterflyPackageRoot)" Condition="!Exists('$(ButterflyPackageRoot)')" />
+  </Target>
+
+  <!--
+    Local feeds reuse version numbers while the framework is in development, but NuGet never
+    refreshes a version it has already cached. Evicting it after packing keeps consumers up to date.
+  -->
+  <Target Name="ButterflyEvictPackageCache"
+          AfterTargets="Pack"
+          Condition="'$(ButterflyEvictPackageCache)' == 'true' and '$(IsPackable)' == 'true' and '$(NuGetPackageRoot)' != ''">
+    <PropertyGroup>
+      <_ButterflyCachedPackageDirectory>$([MSBuild]::EnsureTrailingSlash('$(NuGetPackageRoot)'))$(PackageId.ToLowerInvariant())\$(PackageVersion.ToLowerInvariant())</_ButterflyCachedPackageDirectory>
+    </PropertyGroup>
+    <RemoveDir Directories="$(_ButterflyCachedPackageDirectory)" Condition="Exists('$(_ButterflyCachedPackageDirectory)')" />
+  </Target>
+
+  <!--
+    Describes the package a project contributes to the framework catalog (used by Butterfly.Tool).
+    Only packable libraries count: the SDK and the tool itself are infrastructure, not dependencies.
+  -->
+  <Target Name="GetButterflyPackage" Returns="@(ButterflyPackage)">
+    <ItemGroup Condition="'$(IsPackable)' == 'true' and '$(OutputType)' == 'Library' and '$(PackageType)' != 'MSBuildSdk'">
+      <ButterflyPackage Include="$(PackageId)" Description="$(Title)" />
+    </ItemGroup>
+  </Target>
+
+</Project>

@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly System Info Chrysalis</Title>
+    <Description>System information (CPU, memory, operating system) as a Chrysalis service, available over REST, SOAP, JSON-RPC, XML-RPC, gRPC and binary RPC.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.SystemInfo.CPU\Butterfly.SystemInfo.CPU.csproj" />
+    <ProjectReference Include="..\Butterfly.SystemInfo.Memory\Butterfly.SystemInfo.Memory.csproj" />
+    <ProjectReference Include="..\Butterfly.SystemInfo.OS\Butterfly.SystemInfo.OS.csproj" />
+    <ProjectReference Include="..\..\Chrysalis\Butterfly.Chrysalis.Core\Butterfly.Chrysalis.Core.csproj" />
+    <!-- The generator describes the service and its contracts into this assembly. -->
+    <ProjectReference Include="..\..\Serialization\Butterfly.Serialization.Generators\Butterfly.Serialization.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>

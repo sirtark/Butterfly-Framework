@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Chrysalis Core</Title>
+    <Description>Protocol-independent server core: services described once (by the Butterfly.Serialization source generator, no reflection), an invocation pipeline with middleware, and uniform errors. REST, SOAP, JSON-RPC, XML-RPC, gRPC and binary RPC expose the same services, serialized with Butterfly.Serialization profiles.</Description>
+    <RootNamespace>Butterfly.Chrysalis</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Serialization\Butterfly.Serialization.Core\Butterfly.Serialization.Core.csproj" />
+  </ItemGroup>
+
+</Project>

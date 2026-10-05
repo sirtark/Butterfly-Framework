@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Scripting Lua NLua</Title>
+    <Description>NLua engine for Butterfly Lua scripting: native Lua with a sandboxed environment.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\SandboxChunk.lua" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NLua" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Scripting.Lua\Butterfly.Scripting.Lua.csproj" />
+  </ItemGroup>
+
+</Project>

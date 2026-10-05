@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Chrysalis ASP.NET Core</Title>
+    <Description>Chrysalis in ASP.NET Core: services registered in dependency injection (scoped implementations and middleware), REST, SOAP, JSON-RPC, XML-RPC and gRPC served by Kestrel, ASP.NET Core authentication flowing into calls, and the Chrysalis HTTP and binary servers as hosted services.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Chrysalis.Rest\Butterfly.Chrysalis.Rest.csproj" />
+    <ProjectReference Include="..\Butterfly.Chrysalis.Soap\Butterfly.Chrysalis.Soap.csproj" />
+    <ProjectReference Include="..\Butterfly.Chrysalis.JsonRpc\Butterfly.Chrysalis.JsonRpc.csproj" />
+    <ProjectReference Include="..\Butterfly.Chrysalis.XmlRpc\Butterfly.Chrysalis.XmlRpc.csproj" />
+    <ProjectReference Include="..\Butterfly.Chrysalis.Grpc\Butterfly.Chrysalis.Grpc.csproj" />
+    <ProjectReference Include="..\Butterfly.Chrysalis.Binary\Butterfly.Chrysalis.Binary.csproj" />
+  </ItemGroup>
+
+</Project>

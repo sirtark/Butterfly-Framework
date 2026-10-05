@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Communication POP3</Title>
+    <Description>POP3 client (RFC 1939, 2449, 2595, 5034): POP3S and STLS, SASL or USER/PASS authentication, listing, unique ids, retrieval of full messages or headers, and deletion.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Communication.Mail\Butterfly.Communication.Mail.csproj" />
+  </ItemGroup>
+
+</Project>

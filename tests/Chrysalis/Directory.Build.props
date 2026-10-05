@@ -1,0 +1,20 @@
+<Project>
+
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)..'))" />
+
+  <!--
+    Every Chrysalis test project describes the shared sample service with the generator, exactly as a consumer of the
+    Butterfly.Serialization.Core package would (there the generator comes from the package's analyzers folder).
+  -->
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\src\Serialization\Butterfly.Serialization.Generators\Butterfly.Serialization.Generators.csproj"
+                      OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <Compile Include="$(MSBuildThisFileDirectory)Shared\*.cs" LinkBase="Shared" />
+  </ItemGroup>
+
+  <!-- HTTP test servers and clients, for the projects that reference Butterfly.Chrysalis.Http (UsesChrysalisHttp=false opts out). -->
+  <ItemGroup Condition="'$(UsesChrysalisHttp)' != 'false'">
+    <Compile Include="$(MSBuildThisFileDirectory)Shared\Http\*.cs" LinkBase="Shared\Http" />
+  </ItemGroup>
+
+</Project>

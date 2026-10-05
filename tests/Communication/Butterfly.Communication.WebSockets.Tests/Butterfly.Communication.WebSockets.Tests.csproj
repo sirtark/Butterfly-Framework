@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Communication\Butterfly.Communication.WebSockets\Butterfly.Communication.WebSockets.csproj" />
+  </ItemGroup>
+
+</Project>

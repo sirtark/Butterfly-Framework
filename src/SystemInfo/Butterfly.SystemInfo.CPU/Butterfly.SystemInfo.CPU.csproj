@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly System Info CPU</Title>
+    <Description>Processor information: architecture, vendor, model, cores, instruction set features, hardware virtualization support and hypervisor detection.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.SystemInfo.Core\Butterfly.SystemInfo.Core.csproj" />
+  </ItemGroup>
+
+</Project>

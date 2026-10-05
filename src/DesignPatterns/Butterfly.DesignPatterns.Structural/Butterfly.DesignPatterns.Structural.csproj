@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Structural Design Patterns</Title>
+    <Description>Contracts for structural design patterns: decorators and wrappers.</Description>
+  </PropertyGroup>
+
+</Project>

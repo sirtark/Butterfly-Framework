@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Virtualization Libvirt</Title>
+    <Description>Libvirt provider for Butterfly virtualization: manages KVM/QEMU virtual machines and snapshots through virsh.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Virtualization.Core\Butterfly.Virtualization.Core.csproj" />
+  </ItemGroup>
+
+</Project>

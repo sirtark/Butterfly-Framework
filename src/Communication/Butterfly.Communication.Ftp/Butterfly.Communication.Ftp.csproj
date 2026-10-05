@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Communication FTP</Title>
+    <Description>FTP client (RFC 959, 2428, 3659, 4217): explicit and implicit FTPS with protected data channels, EPSV/PASV passive mode, MLSD and LIST parsing, resumable downloads, uploads and directory management.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Communication.Core\Butterfly.Communication.Core.csproj" />
+  </ItemGroup>
+
+</Project>

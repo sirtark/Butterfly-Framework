@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Chrysalis REST</Title>
+    <Description>REST/JSON binding for Chrysalis services: routes from [HttpGet]/[HttpPost]... attributes with route and query parameters, JSON bodies, and RFC 9457 problem details for errors.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.Chrysalis.Http\Butterfly.Chrysalis.Http.csproj" />
+    <ProjectReference Include="..\..\Serialization\Butterfly.Serialization.Json\Butterfly.Serialization.Json.csproj" />
+  </ItemGroup>
+
+</Project>

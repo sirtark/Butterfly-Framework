@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Butterfly Communication DNS</Title>
+    <Description>DNS client (RFC 1035) over UDP with TCP fallback: A, AAAA, CNAME, MX, TXT, NS, PTR, SRV, SOA and CAA records.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Networking\Butterfly.Networking.Sockets\Butterfly.Networking.Sockets.csproj" />
+  </ItemGroup>
+
+</Project>

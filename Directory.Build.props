@@ -1,0 +1,55 @@
+<Project>
+
+  <!--
+    Shared settings for every project that is part of the Butterfly framework (src/, tests/, tools/).
+    samples/ opts out on purpose: samples consume Butterfly the same way an external project would.
+  -->
+
+  <!-- Repository layout -->
+  <PropertyGroup>
+    <IsButterflyFrameworkProject>true</IsButterflyFrameworkProject>
+    <ButterflyRoot>$(MSBuildThisFileDirectory)</ButterflyRoot>
+    <ButterflyEngDirectory>$(ButterflyRoot)eng\</ButterflyEngDirectory>
+    <ButterflySdkSourceDirectory>$(ButterflyRoot)src\Butterfly.Sdk\Sdk\</ButterflySdkSourceDirectory>
+    <ButterflyPackageRoot>$(ButterflyRoot)Packages\Release\Butterfly\</ButterflyPackageRoot>
+  </PropertyGroup>
+
+  <!-- Version: defined once, inside Butterfly.Sdk, and shared by every project -->
+  <Import Project="$(ButterflySdkSourceDirectory)Butterfly.Version.props" />
+
+  <PropertyGroup>
+    <Version>$(ButterflyVersion)</Version>
+  </PropertyGroup>
+
+  <!-- Compilation -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsAotCompatible>true</IsAotCompatible>
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+
+  <!-- Strong naming -->
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(ButterflyEngDirectory)Butterfly.snk</AssemblyOriginatorKeyFile>
+    <ButterflyPublicKey>002400000480000094000000060200000024000052534131000400000100010011ed8d38345c3db69d40bc70c5573b909b5b1b8e7c6d5ce95b859dba0c90da2be3eb38693e18074cf044e911286de06fffb827bad28405e10bcb39a075fd7ac32943822dad11c8b5d985f7c180e9c855e7a2f0e3cb848c93e6dcca4e5feb6412dd32f24d6947916d48a22ea94317a788fcec14962b853596ca287ba99c69d5be</ButterflyPublicKey>
+  </PropertyGroup>
+
+  <!-- Packaging: every packable project lands in the local Butterfly feed -->
+  <PropertyGroup>
+    <Authors>Antril Organization</Authors>
+    <PackageProjectUrl>https://www.antril.org/Butterfly/</PackageProjectUrl>
+    <PackageIcon>Butterfly.png</PackageIcon>
+    <PackageOutputPath>$(ButterflyPackageRoot)</PackageOutputPath>
+    <GeneratePackageOnBuild Condition="'$(Configuration)' == 'Release'">true</GeneratePackageOnBuild>
+    <!-- Re-packing the same version would otherwise leave a stale copy in the NuGet cache. -->
+    <ButterflyEvictPackageCache Condition="'$(ButterflyEvictPackageCache)' == ''">true</ButterflyEvictPackageCache>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(ButterflyEngDirectory)Butterfly.png" Pack="true" PackagePath="\" Visible="false" />
+  </ItemGroup>
+
+</Project>
